@@ -1,0 +1,340 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Language: en\n"
+
+msgid "card.dimension"
+msgstr "Size: {value}"
+
+msgid "card.filter_quantity"
+msgstr "Filter quantity: {value}"
+
+msgid "card.frequency"
+msgstr "Intervention frequency: {value}"
+
+msgid "card.last_intervention"
+msgstr "Last intervention: {date}"
+
+msgid "card.new_intervention_date"
+msgstr "New intervention date: "
+
+msgid "common.cancel"
+msgstr "Cancel"
+
+msgid "common.delete"
+msgstr "Delete"
+
+msgid "common.em_dash"
+msgstr "—"
+
+msgid "common.error"
+msgstr "Error"
+
+msgid "common.reset"
+msgstr "Reset"
+
+msgid "common.save"
+msgstr "Save"
+
+msgid "common.success"
+msgstr "Operation completed"
+
+msgid "dashboard.intro"
+msgstr "Quick overview of filter status."
+
+msgid "dashboard.ok"
+msgstr "Compliant filters"
+
+msgid "dashboard.overdue"
+msgstr "Overdue filters"
+
+msgid "dashboard.warning"
+msgstr "Filters due soon"
+
+msgid "date.invalid"
+msgstr "Enter a valid date ({format})."
+
+msgid "date.open_calendar"
+msgstr "Open calendar"
+
+msgid "detail.column.date"
+msgstr "Date"
+
+msgid "detail.column.notes"
+msgstr "Notes"
+
+msgid "detail.create_intervention"
+msgstr "Create intervention"
+
+msgid "detail.days"
+msgstr "{count} days"
+
+msgid "detail.days_to_due"
+msgstr "Days until due"
+
+msgid "detail.delete_confirm"
+msgstr "Delete the intervention on {date}?"
+
+msgid "detail.delete_confirm_title"
+msgstr "Confirm deletion"
+
+msgid "detail.delete_intervention"
+msgstr "Delete selected intervention"
+
+msgid "detail.dimension"
+msgstr "Size"
+
+msgid "detail.due_today"
+msgstr "Due today"
+
+msgid "detail.edit_intervention"
+msgstr "Edit selected intervention"
+
+msgid "detail.filter_quantity"
+msgstr "Filter quantity"
+
+msgid "detail.frequency"
+msgstr "Intervention frequency"
+
+msgid "detail.history"
+msgstr "Intervention history"
+
+msgid "detail.in_days"
+msgstr "In {count} days"
+
+msgid "detail.in_days_one"
+msgstr "In 1 day"
+
+msgid "detail.intervention_added"
+msgstr "Intervention added."
+
+msgid "detail.intervention_deleted"
+msgstr "Intervention deleted."
+
+msgid "detail.intervention_updated"
+msgstr "Intervention updated."
+
+msgid "detail.last_intervention"
+msgstr "Last intervention"
+
+msgid "detail.next_due"
+msgstr "Next due date"
+
+msgid "detail.no_filter"
+msgstr "No filter linked to this panel."
+
+msgid "detail.no_interventions"
+msgstr "No interventions recorded."
+
+msgid "detail.overdue_days"
+msgstr "Overdue by {count} days"
+
+msgid "detail.warning_config"
+msgstr "Due-soon configuration"
+
+msgid "detail.warning_duration"
+msgstr "Due-soon duration"
+
+msgid "detail.warning_start"
+msgstr "Due-soon start"
+
+msgid "detail.warning_status"
+msgstr "Due-soon status"
+
+msgid "filter.all"
+msgstr "All"
+
+msgid "filter.ok"
+msgstr "Compliant"
+
+msgid "filter.overdue"
+msgstr "Overdue"
+
+msgid "filter.panels"
+msgstr "Panels"
+
+msgid "filter.state"
+msgstr "Status"
+
+msgid "filter.warning"
+msgstr "Due soon"
+
+msgid "filtri.hint"
+msgstr "Select a department to view filters."
+
+msgid "filtri.search.all"
+msgstr "Search everywhere"
+
+msgid "filtri.search.all_fields"
+msgstr "Search panel, department, line, size, frequency or quantity"
+
+msgid "filtri.search.dimensione"
+msgstr "Search by size"
+
+msgid "filtri.search.frequenza"
+msgstr "Search by frequency"
+
+msgid "filtri.search.linea"
+msgstr "Search by line"
+
+msgid "filtri.search.quadro"
+msgstr "Search by panel"
+
+msgid "filtri.search.quantita"
+msgstr "Search by quantity"
+
+msgid "filtri.search.reparto"
+msgstr "Search by department"
+
+msgid "filtri.search.selected_fields"
+msgstr "Search selected fields"
+
+msgid "filtri.structure"
+msgstr "Structure"
+
+msgid "intervento.add"
+msgstr "Add intervention"
+
+msgid "intervento.date"
+msgstr "Date"
+
+msgid "intervento.edit"
+msgstr "Edit intervention"
+
+msgid "intervento.new"
+msgstr "New intervention"
+
+msgid "intervento.notes"
+msgstr "Notes"
+
+msgid "intervento.notes_placeholder"
+msgstr "Optional notes"
+
+msgid "intervento.save_changes"
+msgstr "Save changes"
+
+msgid "nav.filtri"
+msgstr "Filters"
+
+msgid "nav.home"
+msgstr "Home"
+
+msgid "nav.report"
+msgstr "Report"
+
+msgid "report.divider.linea"
+msgstr "Line · {name}"
+
+msgid "report.divider.reparto"
+msgstr "Department · {name}"
+
+msgid "report.empty.all"
+msgstr "No panels found."
+
+msgid "report.empty.multiple"
+msgstr "No panels with selected statuses: {states}."
+
+msgid "report.empty.single"
+msgstr "No {state} panels."
+
+msgid "report.filters_dimension_line"
+msgstr "- {quantity} filters {dimension}"
+
+msgid "report.filters_to_prepare"
+msgstr "Filters to prepare"
+
+msgid "report.generated_at"
+msgstr "Generated on {datetime}"
+
+msgid "report.panels_overdue"
+msgstr "Overdue panels"
+
+msgid "report.print"
+msgstr "Print"
+
+msgid "report.state.ok"
+msgstr "compliant"
+
+msgid "report.state.overdue"
+msgstr "overdue"
+
+msgid "report.state.warning"
+msgstr "due soon"
+
+msgid "report.summary.ok"
+msgstr "Compliant: {count}"
+
+msgid "report.summary.overdue"
+msgstr "Overdue: {count}"
+
+msgid "report.summary.total"
+msgstr "Total: {count}"
+
+msgid "report.summary.warning"
+msgstr "Due soon: {count}"
+
+msgid "report.title.all"
+msgstr "All panels"
+
+msgid "report.title.combined"
+msgstr "Panels {labels}"
+
+msgid "report.title.ok"
+msgstr "Compliant panels"
+
+msgid "report.title.overdue"
+msgstr "Overdue panels"
+
+msgid "report.title.short.ok"
+msgstr "compliant"
+
+msgid "report.title.short.overdue"
+msgstr "overdue"
+
+msgid "report.title.short.warning"
+msgstr "due soon"
+
+msgid "report.title.warning"
+msgstr "Panels due soon"
+
+msgid "search.scope.all"
+msgstr "All"
+
+msgid "search.scope.dimensione"
+msgstr "Size"
+
+msgid "search.scope.frequenza"
+msgstr "Frequency"
+
+msgid "search.scope.linea"
+msgstr "Line"
+
+msgid "search.scope.multi"
+msgstr "{count} fields"
+
+msgid "search.scope.quadro"
+msgstr "Panel"
+
+msgid "search.scope.quantita"
+msgstr "Quantity"
+
+msgid "search.scope.reparto"
+msgstr "Department"
+
+msgid "search.scope.tooltip"
+msgstr "Search fields: {fields}"
+
+msgid "status.ok"
+msgstr "Intervention compliant"
+
+msgid "status.overdue"
+msgstr "Intervention overdue"
+
+msgid "status.overdue_short"
+msgstr "Overdue"
+
+msgid "status.warning"
+msgstr "Intervention due soon"
+
+msgid "status.warning_short"
+msgstr "Due soon"

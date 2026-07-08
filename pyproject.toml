@@ -1,0 +1,85 @@
+[project]
+name = "gestionale-filtri"
+version = "0.1.0"
+description = "Gestione filtri"
+requires-python = ">=3.10"
+dependencies = [
+    "Babel>=2.14.0",
+    "PySide6>=6.6.0",
+    "PySide6-Fluent-Widgets>=1.7.0",
+    "SQLAlchemy>=2.0.0",
+    "alembic>=1.16.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "tomli>=2.0.0; python_version < '3.11'",
+]
+
+[project.scripts]
+filtri = "main:main"
+filtri-db = "backend.database.cli:main"
+
+[project.optional-dependencies]
+postgres = ["psycopg[binary]>=3.1.0"]
+mysql = ["pymysql>=1.1.0"]
+mariadb = ["mariadb>=1.1.0"]
+mssql = ["pyodbc>=5.0.0"]
+oracle = ["oracledb>=2.0.0"]
+all-db = [
+    "psycopg[binary]>=3.1.0",
+    "pymysql>=1.1.0",
+    "mariadb>=1.1.0",
+    "pyodbc>=5.0.0",
+    "oracledb>=2.0.0",
+]
+dev = ["factory-boy>=3.3.0"]
+audit = ["pip-audit>=2.7.0"]
+security = ["bandit>=1.7.0", "semgrep>=1.80.0"]
+quality = ["ruff>=0.12.0", "mypy>=1.17.0"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["main"]
+
+[tool.setuptools.packages.find]
+include = ["backend*", "frontend*"]
+exclude = ["data*"]
+
+[tool.setuptools.package-data]
+"backend.i18n" = ["locales/**/*.mo"]
+
+[tool.alembic]
+script_location = "%(here)s/backend/database/alembic"
+prepend_sys_path = ["."]
+
+[tool.filtri]
+display_name = "Gestionale Filtri"
+
+[tool.filtri.stato]
+# Percentuale dell'intervallo di frequenza entro la quale mostrare "in scadenza" (!)
+preavviso_percentuale = 15
+# Tetto massimo in giorni per l'in scadenza (anche se la percentuale darebbe di più)
+preavviso_massimo_giorni = 14
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["backend", "main.py"]
+pretty = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "qfluentwidgets",
+    "qfluentwidgets.*",
+]
+ignore_missing_imports = true

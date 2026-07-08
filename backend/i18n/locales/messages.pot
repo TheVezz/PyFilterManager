@@ -1,0 +1,454 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-07-08 20:17+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: backend/i18n/dates.py:67
+msgid "date.invalid"
+msgstr ""
+
+#: backend/i18n/translations.py:53
+msgid "filter.all"
+msgstr ""
+
+#: backend/i18n/translations.py:54
+msgid "filter.ok"
+msgstr ""
+
+#: backend/i18n/translations.py:55
+msgid "filter.warning"
+msgstr ""
+
+#: backend/i18n/translations.py:56
+msgid "filter.overdue"
+msgstr ""
+
+#: backend/i18n/translations.py:62
+msgid "report.title.all"
+msgstr ""
+
+#: backend/i18n/translations.py:66
+msgid "report.title.combined"
+msgstr ""
+
+#: frontend/components/date_input.py:39
+msgid "date.open_calendar"
+msgstr ""
+
+#: frontend/components/filtro_card.py:14
+#: frontend/components/quadro_detail_panel.py:35
+#: frontend/views/report_view.py:77
+msgid "status.ok"
+msgstr ""
+
+#: frontend/components/filtro_card.py:15
+#: frontend/components/quadro_detail_panel.py:36
+#: frontend/views/report_view.py:78
+msgid "status.warning"
+msgstr ""
+
+#: frontend/components/filtro_card.py:16
+#: frontend/components/quadro_detail_panel.py:37
+#: frontend/views/report_view.py:79
+msgid "status.overdue"
+msgstr ""
+
+#: frontend/components/filtro_card.py:46 frontend/views/report_view.py:64
+#: frontend/views/report_view.py:392
+msgid "card.dimension"
+msgstr ""
+
+#: frontend/components/filtro_card.py:50 frontend/views/report_view.py:65
+#: frontend/views/report_view.py:393
+msgid "card.filter_quantity"
+msgstr ""
+
+#: frontend/components/filtro_card.py:54
+msgid "card.frequency"
+msgstr ""
+
+#: frontend/components/filtro_card.py:59 frontend/components/filtro_card.py:64
+#: frontend/views/report_view.py:68 frontend/views/report_view.py:394
+msgid "card.last_intervention"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:17
+#: frontend/components/quadro_detail_panel.py:399
+msgid "common.error"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:37
+msgid "intervento.edit"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:37
+msgid "intervento.new"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:51
+msgid "intervento.date"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:55
+msgid "intervento.notes"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:57
+msgid "intervento.notes_placeholder"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:62
+#: frontend/components/quadro_detail_panel.py:384
+msgid "common.cancel"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:64
+msgid "intervento.save_changes"
+msgstr ""
+
+#: frontend/components/intervento_dialog.py:64
+msgid "intervento.add"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:118
+msgid "detail.history"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:120
+msgid "detail.create_intervention"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:123
+msgid "detail.edit_intervention"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:126
+msgid "detail.delete_intervention"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:141
+msgid "detail.column.date"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:141
+msgid "detail.column.notes"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:224
+#: frontend/components/quadro_detail_panel.py:357
+msgid "detail.no_filter"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:231
+msgid "detail.overdue_days"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:233
+msgid "detail.due_today"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:235
+#: frontend/components/quadro_detail_panel.py:276
+msgid "detail.days"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:240
+msgid "detail.filter_quantity"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:243
+msgid "detail.dimension"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:245
+msgid "detail.frequency"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:249
+msgid "detail.warning_config"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:253
+msgid "detail.last_intervention"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:254
+msgid "detail.next_due"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:255
+msgid "detail.days_to_due"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:258
+msgid "detail.warning_duration"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:262
+msgid "detail.warning_start"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:265
+msgid "detail.warning_status"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:282
+msgid "status.overdue_short"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:284
+#: frontend/components/quadro_detail_panel.py:287
+msgid "status.warning_short"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:289
+msgid "detail.in_days_one"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:290
+msgid "detail.in_days"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:316
+msgid "detail.no_interventions"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:360
+msgid "detail.intervention_added"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:368
+msgid "detail.intervention_updated"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:379
+msgid "detail.delete_confirm_title"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:380
+msgid "detail.delete_confirm"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:383
+msgid "common.delete"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:394
+msgid "detail.intervention_deleted"
+msgstr ""
+
+#: frontend/components/quadro_detail_panel.py:408
+msgid "common.success"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:19
+#: frontend/components/scoped_search_line_edit.py:92
+#: frontend/components/scoped_search_line_edit.py:96
+#: frontend/components/scoped_search_line_edit.py:136
+msgid "search.scope.all"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:20
+msgid "search.scope.quadro"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:21
+msgid "search.scope.reparto"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:22
+msgid "search.scope.linea"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:23
+msgid "search.scope.dimensione"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:24
+msgid "search.scope.frequenza"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:25
+msgid "search.scope.quantita"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:131
+msgid "search.scope.tooltip"
+msgstr ""
+
+#: frontend/components/scoped_search_line_edit.py:140
+msgid "search.scope.multi"
+msgstr ""
+
+#: frontend/views/home_view.py:34 frontend/views/home_view.py:126
+#: frontend/views/home_view.py:245
+msgid "nav.filtri"
+msgstr ""
+
+#: frontend/views/home_view.py:41
+msgid "filtri.search.all_fields"
+msgstr ""
+
+#: frontend/views/home_view.py:45
+msgid "filter.state"
+msgstr ""
+
+#: frontend/views/home_view.py:50
+msgid "common.reset"
+msgstr ""
+
+#: frontend/views/home_view.py:66
+msgid "filtri.hint"
+msgstr ""
+
+#: frontend/views/home_view.py:96
+msgid "filtri.structure"
+msgstr ""
+
+#: frontend/views/home_view.py:163
+msgid "filtri.search.all"
+msgstr ""
+
+#: frontend/views/home_view.py:164
+msgid "filtri.search.quadro"
+msgstr ""
+
+#: frontend/views/home_view.py:165
+msgid "filtri.search.reparto"
+msgstr ""
+
+#: frontend/views/home_view.py:166
+msgid "filtri.search.linea"
+msgstr ""
+
+#: frontend/views/home_view.py:167
+msgid "filtri.search.dimensione"
+msgstr ""
+
+#: frontend/views/home_view.py:168
+msgid "filtri.search.frequenza"
+msgstr ""
+
+#: frontend/views/home_view.py:169
+msgid "filtri.search.quantita"
+msgstr ""
+
+#: frontend/views/home_view.py:177
+msgid "filtri.search.selected_fields"
+msgstr ""
+
+#: frontend/views/home_view.py:208 frontend/views/home_view.py:244
+msgid "nav.home"
+msgstr ""
+
+#: frontend/views/home_view.py:209
+msgid "dashboard.intro"
+msgstr ""
+
+#: frontend/views/home_view.py:217
+msgid "dashboard.ok"
+msgstr ""
+
+#: frontend/views/home_view.py:218
+msgid "dashboard.warning"
+msgstr ""
+
+#: frontend/views/home_view.py:219
+msgid "dashboard.overdue"
+msgstr ""
+
+#: frontend/views/home_view.py:246 frontend/views/report_view.py:224
+#: frontend/views/report_view.py:427
+msgid "nav.report"
+msgstr ""
+
+#: frontend/views/report_view.py:72 frontend/views/report_view.py:395
+msgid "card.new_intervention_date"
+msgstr ""
+
+#: frontend/views/report_view.py:136 frontend/views/report_view.py:143
+msgid "report.summary.total"
+msgstr ""
+
+#: frontend/views/report_view.py:137 frontend/views/report_view.py:145
+msgid "report.summary.ok"
+msgstr ""
+
+#: frontend/views/report_view.py:138 frontend/views/report_view.py:147
+msgid "report.summary.overdue"
+msgstr ""
+
+#: frontend/views/report_view.py:139 frontend/views/report_view.py:149
+msgid "report.summary.warning"
+msgstr ""
+
+#: frontend/views/report_view.py:167 frontend/views/report_view.py:311
+msgid "report.filters_dimension_line"
+msgstr ""
+
+#: frontend/views/report_view.py:179 frontend/views/report_view.py:465
+msgid "report.empty.all"
+msgstr ""
+
+#: frontend/views/report_view.py:181
+msgid "report.state.ok"
+msgstr ""
+
+#: frontend/views/report_view.py:182
+msgid "report.state.warning"
+msgstr ""
+
+#: frontend/views/report_view.py:183
+msgid "report.state.overdue"
+msgstr ""
+
+#: frontend/views/report_view.py:186
+msgid "report.empty.single"
+msgstr ""
+
+#: frontend/views/report_view.py:188
+msgid "report.empty.multiple"
+msgstr ""
+
+#: frontend/views/report_view.py:231
+msgid "report.generated_at"
+msgstr ""
+
+#: frontend/views/report_view.py:238 frontend/views/report_view.py:453
+msgid "report.filters_to_prepare"
+msgstr ""
+
+#: frontend/views/report_view.py:262 frontend/views/report_view.py:511
+msgid "report.divider.reparto"
+msgstr ""
+
+#: frontend/views/report_view.py:266 frontend/views/report_view.py:520
+msgid "report.divider.linea"
+msgstr ""
+
+#: frontend/views/report_view.py:434
+msgid "filter.panels"
+msgstr ""
+
+#: frontend/views/report_view.py:442
+msgid "report.print"
+msgstr ""
+
+#: frontend/views/report_view.py:452 frontend/views/report_view.py:462
+msgid "report.panels_overdue"
+msgstr ""
+

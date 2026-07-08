@@ -1,0 +1,419 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gestionale filtri\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "card.dimension"
+msgstr "Dimensione: {value}"
+
+msgid "card.filter_quantity"
+msgstr "Quantità filtri: {value}"
+
+msgid "card.frequency"
+msgstr "Frequenza intervento: {value}"
+
+msgid "card.last_intervention"
+msgstr "Ultimo intervento: {date}"
+
+msgid "card.new_intervention_date"
+msgstr "Data nuovo intervento: "
+
+msgid "common.cancel"
+msgstr "Annulla"
+
+msgid "common.delete"
+msgstr "Elimina"
+
+msgid "common.em_dash"
+msgstr "—"
+
+msgid "common.error"
+msgstr "Errore"
+
+msgid "common.reset"
+msgstr "Reset"
+
+msgid "common.save"
+msgstr "Salva"
+
+msgid "common.success"
+msgstr "Operazione completata"
+
+msgid "dashboard.intro"
+msgstr "Riepilogo rapido dello stato dei filtri."
+
+msgid "dashboard.ok"
+msgstr "Filtri in regola"
+
+msgid "dashboard.overdue"
+msgstr "Filtri scaduti"
+
+msgid "dashboard.warning"
+msgstr "Filtri in scadenza"
+
+msgid "date.invalid"
+msgstr "Inserisci una data valida ({format})."
+
+msgid "date.open_calendar"
+msgstr "Apri calendario"
+
+msgid "detail.column.date"
+msgstr "Data"
+
+msgid "detail.column.notes"
+msgstr "Note"
+
+msgid "detail.create_intervention"
+msgstr "Crea intervento"
+
+msgid "detail.days"
+msgstr "{count} giorni"
+
+msgid "detail.days_to_due"
+msgstr "Giorni alla scadenza"
+
+msgid "detail.delete_confirm"
+msgstr "Eliminare l'intervento del {date}?"
+
+msgid "detail.delete_confirm_title"
+msgstr "Conferma eliminazione"
+
+msgid "detail.delete_intervention"
+msgstr "Elimina intervento selezionato"
+
+msgid "detail.dimension"
+msgstr "Dimensione"
+
+msgid "detail.due_today"
+msgstr "Scade oggi"
+
+msgid "detail.edit_intervention"
+msgstr "Modifica intervento selezionato"
+
+msgid "detail.filter_quantity"
+msgstr "Quantità filtri"
+
+msgid "detail.frequency"
+msgstr "Frequenza intervento"
+
+msgid "detail.history"
+msgstr "Storico interventi"
+
+msgid "detail.in_days"
+msgstr "Tra {count} giorni"
+
+msgid "detail.in_days_one"
+msgstr "Tra 1 giorno"
+
+msgid "detail.intervention_added"
+msgstr "Intervento aggiunto."
+
+msgid "detail.intervention_deleted"
+msgstr "Intervento eliminato."
+
+msgid "detail.intervention_updated"
+msgstr "Intervento aggiornato."
+
+msgid "detail.last_intervention"
+msgstr "Ultimo intervento"
+
+msgid "detail.next_due"
+msgstr "Prossima scadenza"
+
+msgid "detail.no_filter"
+msgstr "Nessun filtro associato a questo quadro."
+
+msgid "detail.no_interventions"
+msgstr "Nessun intervento registrato."
+
+msgid "detail.overdue_days"
+msgstr "Scaduto da {count} giorni"
+
+msgid "detail.warning_config"
+msgstr "Configurazione in scadenza"
+
+msgid "detail.warning_duration"
+msgstr "Durata in scadenza"
+
+msgid "detail.warning_start"
+msgstr "Inizio in scadenza"
+
+msgid "detail.warning_status"
+msgstr "Stato in scadenza"
+
+msgid "filter.all"
+msgstr "Tutti"
+
+msgid "filter.ok"
+msgstr "In regola"
+
+msgid "filter.overdue"
+msgstr "Scaduti"
+
+msgid "filter.panels"
+msgstr "Quadri"
+
+msgid "filter.state"
+msgstr "Stato"
+
+msgid "filter.warning"
+msgstr "In scadenza"
+
+msgid "filtri.hint"
+msgstr "Seleziona un reparto per visualizzare i filtri."
+
+msgid "filtri.search.all"
+msgstr "Cerca in tutto"
+
+msgid "filtri.search.all_fields"
+msgstr "Cerca quadro, reparto, linea, dimensione, frequenza o quantità"
+
+msgid "filtri.search.dimensione"
+msgstr "Cerca per dimensione"
+
+msgid "filtri.search.frequenza"
+msgstr "Cerca per frequenza"
+
+msgid "filtri.search.linea"
+msgstr "Cerca per linea"
+
+msgid "filtri.search.quadro"
+msgstr "Cerca per quadro"
+
+msgid "filtri.search.quantita"
+msgstr "Cerca per quantità"
+
+msgid "filtri.search.reparto"
+msgstr "Cerca per reparto"
+
+msgid "filtri.search.selected_fields"
+msgstr "Cerca nei campi selezionati"
+
+msgid "filtri.structure"
+msgstr "Struttura"
+
+msgid "intervento.add"
+msgstr "Aggiungi intervento"
+
+msgid "intervento.date"
+msgstr "Data"
+
+msgid "intervento.edit"
+msgstr "Modifica intervento"
+
+msgid "intervento.new"
+msgstr "Nuovo intervento"
+
+msgid "intervento.notes"
+msgstr "Note"
+
+msgid "intervento.notes_placeholder"
+msgstr "Note opzionali"
+
+msgid "intervento.save_changes"
+msgstr "Salva modifiche"
+
+msgid "nav.filtri"
+msgstr "Filtri"
+
+msgid "nav.home"
+msgstr "Home"
+
+msgid "nav.report"
+msgstr "Report"
+
+msgid "report.divider.linea"
+msgstr "Linea · {name}"
+
+msgid "report.divider.reparto"
+msgstr "Reparto · {name}"
+
+msgid "report.empty.all"
+msgstr "Nessun quadro presente."
+
+msgid "report.empty.multiple"
+msgstr "Nessun quadro con stati selezionati: {states}."
+
+msgid "report.empty.single"
+msgstr "Nessun quadro {state}."
+
+msgid "report.filters_dimension_line"
+msgstr "- {quantity} filtri {dimension}"
+
+msgid "report.filters_to_prepare"
+msgstr "Filtri da preparare"
+
+msgid "report.generated_at"
+msgstr "Generato il {datetime}"
+
+msgid "report.panels_overdue"
+msgstr "Quadri scaduti"
+
+msgid "report.print"
+msgstr "Stampa"
+
+msgid "report.state.ok"
+msgstr "in regola"
+
+msgid "report.state.overdue"
+msgstr "scaduto"
+
+msgid "report.state.warning"
+msgstr "in scadenza"
+
+msgid "report.summary.ok"
+msgstr "In regola: {count}"
+
+msgid "report.summary.overdue"
+msgstr "Scaduti: {count}"
+
+msgid "report.summary.total"
+msgstr "Totale: {count}"
+
+msgid "report.summary.warning"
+msgstr "In scadenza: {count}"
+
+msgid "report.title.all"
+msgstr "Tutti i quadri"
+
+msgid "report.title.combined"
+msgstr "Quadri {labels}"
+
+msgid "report.title.ok"
+msgstr "Quadri in regola"
+
+msgid "report.title.overdue"
+msgstr "Quadri scaduti"
+
+msgid "report.title.short.ok"
+msgstr "in regola"
+
+msgid "report.title.short.overdue"
+msgstr "scaduti"
+
+msgid "report.title.short.warning"
+msgstr "in scadenza"
+
+msgid "report.title.warning"
+msgstr "Quadri in scadenza"
+
+msgid "search.scope.all"
+msgstr "Tutto"
+
+msgid "search.scope.dimensione"
+msgstr "Dimensione"
+
+msgid "search.scope.frequenza"
+msgstr "Frequenza"
+
+msgid "search.scope.linea"
+msgstr "Linea"
+
+msgid "search.scope.multi"
+msgstr "{count} campi"
+
+msgid "search.scope.quadro"
+msgstr "Quadro"
+
+msgid "search.scope.quantita"
+msgstr "Quantità"
+
+msgid "search.scope.reparto"
+msgstr "Reparto"
+
+msgid "search.scope.tooltip"
+msgstr "Campi di ricerca: {fields}"
+
+msgid "status.ok"
+msgstr "Intervento in regola"
+
+msgid "status.overdue"
+msgstr "Intervento scaduto"
+
+msgid "status.overdue_short"
+msgstr "Scaduto"
+
+msgid "status.warning"
+msgstr "Intervento in scadenza"
+
+msgid "status.warning_short"
+msgstr "In scadenza"
+
+msgid "nav.settings"
+msgstr "Impostazioni"
+
+msgid "settings.title"
+msgstr "Impostazioni"
+
+msgid "settings.intro"
+msgstr "Personalizza tema, lingua e formato delle date."
+
+msgid "settings.appearance"
+msgstr "Aspetto"
+
+msgid "settings.theme"
+msgstr "Tema"
+
+msgid "settings.theme.help"
+msgstr "Scegli chiaro, scuro o automatico in base al sistema."
+
+msgid "settings.theme.auto"
+msgstr "Automatico"
+
+msgid "settings.theme.light"
+msgstr "Chiaro"
+
+msgid "settings.theme.dark"
+msgstr "Scuro"
+
+msgid "settings.language_section"
+msgstr "Lingua"
+
+msgid "settings.language"
+msgstr "Lingua dell'app"
+
+msgid "settings.language.help"
+msgstr "Per applicare un cambio lingua è necessario riavviare l'app."
+
+msgid "settings.language.system"
+msgstr "Sistema"
+
+msgid "settings.language.it"
+msgstr "Italiano"
+
+msgid "settings.language.en"
+msgstr "Inglese"
+
+msgid "settings.formats_section"
+msgstr "Formati"
+
+msgid "settings.date_format"
+msgstr "Formato data"
+
+msgid "settings.date_format.help"
+msgstr "Come vengono mostrate le date nell'interfaccia."
+
+msgid "settings.date_format.system"
+msgstr "Sistema"
+
+msgid "settings.date_format.dmy"
+msgstr "gg/mm/aaaa"
+
+msgid "settings.date_format.mdy"
+msgstr "mm/gg/aaaa"
+
+msgid "settings.date_preview"
+msgstr "Anteprima data di oggi: {sample}"
+
+msgid "settings.restart_title"
+msgstr "Riavvio necessario"
+
+msgid "settings.restart_message"
+msgstr "Per applicare la nuova lingua, l'applicazione deve essere riavviata."
+
+msgid "settings.restart_now"
+msgstr "Riavvia ora"
+
