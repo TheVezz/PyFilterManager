@@ -13,7 +13,7 @@ L'app è organizzata in quattro aree principali:
 
 Funzionalità già disponibili:
 
-- gerarchia `sede -> reparto -> linea -> quadro elettrico`
+- gerarchia `sede -> reparto -> impianto -> quadro elettrico`
 - creazione, modifica, eliminazione e spostamento dei nodi della gerarchia
 - creazione del quadro insieme al relativo filtro
 - card filtro responsive con badge stato
@@ -23,7 +23,7 @@ Funzionalità già disponibili:
 - report con stampa PDF
 - localizzazione **italiano / inglese**
 - rilevamento lingua del sistema operativo
-- preferenze persistenti per tema, lingua e formato data
+- preferenze persistenti per tema, lingua, formato data e auto-refresh
 
 ## Requisiti
 
@@ -88,38 +88,53 @@ Nella root del progetto sono presenti due script di utilita:
 
 #### `setup.bat`
 
-`setup.bat` crea la `.venv` se manca, aggiorna `pip`, installa il progetto e crea `.env` da `.env.example` se necessario.
+`setup.bat` crea la `.venv` se manca, prova ad aggiornare `pip`, installa il progetto e crea `.env` da `.env.example` se necessario.
 
-Profili disponibili:
+Se l'aggiornamento di `pip` non riesce, lo script mostra un avviso e continua comunque con l'installazione usando la versione già presente nella `.venv`.
 
-- `standard`
-- `dev`
-- `audit`
-- `security`
-- `quality`
+Menu principale:
 
-Sono supportate anche combinazioni multiple dal menu interattivo, per esempio:
+- `Installa / aggiorna l'app`
+- `Disinstalla il pacchetto dalla .venv`
+- `Factory reset repo`
+- `Esci`
 
-- `dev,audit`
-- `dev,security`
-- `dev,quality`
-- `audit,quality`
-- `security,quality`
-- `audit,security`
-- `dev,audit,security`
-- `dev,audit,security,quality`
+Nel sottomenu installazione i profili sono numerati:
+
+- `1` = `standard`
+- `2` = `dev`
+- `3` = `audit`
+- `4` = `security`
+- `5` = `quality`
+- `6` = `Indietro`
+- `7` = `Esci`
+- `8` = `all`
+
+Sono supportate anche combinazioni multiple con input numerico, per esempio:
+
+- `2,3`
+- `2,4`
+- `2,5`
+- `3,4`
+- `2,3,4`
+- `2,3,4,5`
+- `8`
 
 Esempi:
 
 ```powershell
 .\setup.bat
 .\setup.bat install
-.\setup.bat install dev
-.\setup.bat install audit
-.\setup.bat install security
-.\setup.bat install quality
+.\setup.bat install 2
+.\setup.bat install 3
+.\setup.bat install 4
+.\setup.bat install 5
+.\setup.bat install 2,5
+.\setup.bat install 8
 .\setup.bat uninstall
 ```
+
+`Factory reset repo` usa Git per riportare il repository a uno stato pulito del commit corrente, inclusa la rimozione dei file ignorati. Ha senso solo se il progetto è già sotto versionamento Git.
 
 #### `start.bat`
 
@@ -156,7 +171,7 @@ La home è una dashboard sintetica con tre card:
 - `Filtri in scadenza`
 - `Filtri scaduti`
 
-Serve come colpo d'occhio iniziale sullo stato generale dell'impianto.
+Serve come colpo d'occhio iniziale sullo stato generale dei quadri e dei filtri.
 
 ## Vista Filtri
 
@@ -168,7 +183,7 @@ La vista `Filtri` è divisa in due pannelli:
 La TreeView rappresenta:
 
 ```text
-sede -> reparto -> linea -> quadro elettrico
+sede -> reparto -> impianto -> quadro elettrico
 ```
 
 Toolbar disponibile sulla struttura:
@@ -183,7 +198,7 @@ Toolbar disponibile sulla struttura:
 ### Comportamento del pannello sinistro
 
 - nessuna selezione: messaggio guida
-- selezione di `sede`, `reparto` o `linea`: griglia di card filtro
+- selezione di `sede`, `reparto` o `impianto`: griglia di card filtro
 - selezione di `quadro elettrico`: pannello dettaglio quadro
 
 Quando si apre il dettaglio di un quadro, la barra di ricerca e filtro viene nascosta per lasciare più spazio al contenuto.
@@ -201,7 +216,7 @@ Campi ricercabili:
 
 - `quadro`
 - `reparto`
-- `linea`
+- `impianto`
 - `dimensione`
 - `frequenza`
 - `quantità`
@@ -238,7 +253,7 @@ Badge stato:
 
 ## Creazione e modifica quadro
 
-Quando si crea un quadro da una `linea`, il dialogo raccoglie:
+Quando si crea un quadro da un `impianto`, il dialogo raccoglie:
 
 - nome quadro elettrico
 - quantità filtri
@@ -261,7 +276,7 @@ Le validazioni principali sono:
 
 - `dimensione_filtri`: formato `larghezzaxaltezza` con `x` minuscola, ad esempio `600x600`
 - `frequenza_intervento`: numero + unità (`giorni`, `settimane`, `mesi`) oppure alias (`bimestrale`, `trimestrale`, `semestrale`, `annuale`)
-- `quadro_elettrico`: univoco nella stessa linea
+- `quadro_elettrico`: univoco nello stesso impianto
 - campi obbligatori: non possono essere vuoti
 
 Gli errori vengono mostrati con `InfoBar` nei dialoghi, senza chiudere il form.
@@ -321,7 +336,7 @@ Ogni card del report mostra:
 I risultati sono raggruppati con divisori per:
 
 - `Reparto`
-- `Linea`
+- `Impianto`
 
 ### Stampa PDF
 
@@ -331,7 +346,7 @@ La versione stampabile:
 
 - usa layout A4
 - forza la white mode per leggibilità
-- mantiene gli stessi raggruppamenti per reparto e linea
+- mantiene gli stessi raggruppamenti per reparto e impianto
 
 ## Impostazioni
 
@@ -342,12 +357,16 @@ Opzioni disponibili:
 - tema: `Automatico`, `Chiaro`, `Scuro`
 - lingua: `Sistema`, `Italiano`, `Inglese`
 - formato data: `Sistema`, `gg/mm/aaaa`, `mm/gg/aaaa`
+- aggiornamento automatico: `15 secondi`, `30 secondi`, `1 minuto`, `5 minuti`
 
 Note:
 
 - il tema si applica subito
 - il formato data si applica subito
+- l'intervallo di aggiornamento automatico si applica subito
 - il cambio lingua richiede il riavvio dell'app
+
+L'app aggiorna inoltre dashboard, report e vista filtri in tempo reale quando cambiano i dati principali, come interventi o struttura gerarchica.
 
 ## Internazionalizzazione
 
@@ -442,59 +461,78 @@ Questo permette di verificare rapidamente:
 
 ```text
 filtri/
-├── main.py
-├── pyproject.toml
-├── README.md
-├── .env.example
-├── data/
-├── frontend/
-│   ├── components/
-│   │   ├── date_input.py
-│   │   ├── filtro_card.py
-│   │   ├── filtri_grid_panel.py
-│   │   ├── hierarchy_dialogs.py
-│   │   ├── hierarchy_tree.py
-│   │   ├── multi_select_filter_button.py
-│   │   ├── quadro_detail_panel.py
-│   │   ├── scoped_search_line_edit.py
-│   │   ├── select_setting_card.py
-│   │   └── theme_aware_styles.py
-│   └── views/
-│       ├── home_view.py
-│       ├── report_view.py
-│       └── settings_view.py
-└── backend/
-    ├── config.py
-    ├── settings.py
-    ├── database/
-    │   ├── alembic/
-    │   ├── cli.py
-    │   ├── db_manager.py
-    │   ├── init_database.py
-    │   ├── migrations.py
-    │   └── seed.py
-    ├── i18n/
-    │   ├── __init__.py
-    │   ├── dates.py
-    │   ├── locale.py
-    │   ├── translations.py
-    │   └── locales/
-    ├── models/
-    ├── schemas/
-    │   ├── app_preferences.py
-    │   ├── filtri.py
-    │   ├── hierarchy.py
-    │   ├── settings.py
-    │   └── stato_filtro.py
-    └── services/
-        ├── app_preferences_service.py
-        ├── app_theme_service.py
-        ├── filtri_service.py
-        ├── hierarchy_crud_service.py
-        ├── hierarchy_service.py
-        ├── intervento_crud_service.py
-        ├── preavviso_filtro_service.py
-        └── stato_filtro_service.py
+├── main.py                              # Punto di ingresso dell'app desktop
+├── pyproject.toml                       # Dipendenze, script e configurazioni tool
+├── README.md                            # Documentazione del progetto
+├── .env.example                         # Esempio configurazione ambiente
+├── setup.bat                            # Installazione guidata Windows
+├── start.bat                            # Avvio rapido Windows
+├── audit_security.bat                   # Controlli audit, security e quality
+├── data/                                # Dati runtime locali (DB, preferenze)
+├── frontend/                            # Interfaccia utente PySide6
+│   ├── components/                      # Widget e pannelli riutilizzabili
+│   │   ├── date_input.py                # Input data con parsing/formattazione utente
+│   │   ├── frequenza_input.py           # Input guidato per frequenza intervento
+│   │   ├── filtro_card.py               # Card singola riepilogo filtro
+│   │   ├── filtri_grid_panel.py         # Griglia filtri e dettaglio quadro
+│   │   ├── hierarchy_dialogs.py         # Dialog creazione/modifica/spostamento
+│   │   ├── hierarchy_tree.py            # TreeView struttura sede/reparto/impianto
+│   │   ├── intervento_dialog.py         # Dialog inserimento/modifica intervento
+│   │   ├── multi_select_filter_button.py # Filtro multi-selezione stati
+│   │   ├── preavviso_advanced_section.py # Sezione avanzata stato in scadenza
+│   │   ├── quadro_detail_panel.py       # Dettaglio quadro e storico interventi
+│   │   ├── scoped_search_line_edit.py   # Ricerca con ambiti selezionabili
+│   │   ├── section_divider.py           # Separatore visivo sezioni
+│   │   ├── select_setting_card.py       # Card impostazione con combo
+│   │   └── theme_aware_styles.py        # Stili reattivi al tema corrente
+│   └── views/                           # Pagine principali dell'app
+│       ├── dashboard_view.py            # Dashboard Home con riepilogo stati
+│       ├── filtri_view.py               # Pagina operativa filtri e struttura
+│       ├── home_view.py                 # Finestra principale e navigazione
+│       ├── report_view.py               # Report filtrabile e stampabile
+│       └── settings_view.py             # Impostazioni tema, lingua, date, refresh
+└── backend/                             # Logica applicativa e accesso dati
+    ├── config.py                        # Config ad alto livello dell'app
+    ├── settings.py                      # Lettura configurazione runtime / .env
+    ├── database/                        # Gestione database e migrazioni
+    │   ├── alembic/                     # Ambiente e versioni Alembic
+    │   ├── cli.py                       # Comandi CLI filtri-db
+    │   ├── db_manager.py                # Engine, sessioni e URL database
+    │   ├── init_database.py             # Bootstrap database all'avvio
+    │   ├── migrations.py                # Wrapper esecuzione migrazioni
+    │   └── seed.py                      # Popolamento dati di esempio
+    ├── i18n/                            # Localizzazione e traduzioni
+    │   ├── __init__.py                  # API i18n esposta al resto dell'app
+    │   ├── dates.py                     # Parsing e formato date localizzato
+    │   ├── locale.py                    # Risoluzione lingua/locale attivo
+    │   ├── translations.py              # Wrapper gettext e titoli report
+    │   └── locales/                     # Cataloghi .po/.mo italiano e inglese
+    ├── models/                          # Modelli ORM SQLAlchemy
+    │   ├── base.py                      # Base dichiarativa comune
+    │   ├── sede.py                      # Modello sede
+    │   ├── reparto.py                   # Modello reparto
+    │   ├── impianto.py                  # Modello impianto
+    │   ├── quadro_elettrico.py          # Modello quadro elettrico
+    │   ├── filtro.py                    # Modello filtro
+    │   ├── intervento.py                # Modello intervento
+    │   └── __init__.py                  # Export centralizzati modelli
+    ├── schemas/                         # Schemi Pydantic e DTO applicativi
+    │   ├── app_preferences.py           # Preferenze utente persistenti
+    │   ├── filtri.py                    # DTO card, dettagli e report filtri
+    │   ├── frequenza.py                 # Normalizzazione frequenze intervento
+    │   ├── hierarchy.py                 # Schemi gerarchia e CRUD nodi
+    │   ├── settings.py                  # Costanti percorso e root progetto
+    │   ├── stato_filtro.py              # Tipi e config per stato filtro
+    │   └── __init__.py                  # Package schemas
+    └── services/                        # Servizi di business logic
+        ├── app_preferences_service.py   # Caricamento/salvataggio preferenze
+        ├── app_theme_service.py         # Applicazione tema e preferenze UI
+        ├── filtri_service.py            # Query filtri, dashboard e report
+        ├── hierarchy_crud_service.py    # CRUD e move sulla gerarchia
+        ├── hierarchy_service.py         # Caricamento struttura ad albero
+        ├── intervento_crud_service.py   # CRUD interventi
+        ├── preavviso_filtro_service.py  # Calcolo descrizione e config preavviso
+        └── stato_filtro_service.py      # Calcolo stati e scadenze filtro
 ```
 
 ## Schema database
@@ -502,7 +540,7 @@ filtri/
 Relazione principale:
 
 ```text
-sede -> reparto -> linea -> quadro_elettrico -> filtri -> interventi
+sede -> reparto -> impianto -> quadro_elettrico -> filtri -> interventi
 ```
 
 Tabelle principali:
@@ -511,8 +549,8 @@ Tabelle principali:
 |---------|-----------|
 | `sede` | stabilimento / sede |
 | `reparto` | reparti della sede |
-| `linea` | linee del reparto |
-| `quadro_elettrico` | quadri per linea |
+| `impianto` | impianti del reparto |
+| `quadro_elettrico` | quadri per impianto |
 | `filtri` | dati tecnici del filtro |
 | `interventi` | storico interventi |
 

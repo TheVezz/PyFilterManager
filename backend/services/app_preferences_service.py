@@ -7,6 +7,7 @@ from backend.schemas.app_preferences import (
     AppPreferences,
     DateFormatPreference,
     LanguagePreference,
+    LiveRefreshPreference,
     ThemePreference,
 )
 from backend.schemas.settings import APP_ROOT
@@ -42,6 +43,7 @@ def update_app_preferences(
     theme: ThemePreference | None = None,
     language: LanguagePreference | None = None,
     date_format: DateFormatPreference | None = None,
+    live_refresh_seconds: LiveRefreshPreference | None = None,
 ) -> AppPreferences:
     current = load_app_preferences()
     updated = current.model_copy(
@@ -51,6 +53,7 @@ def update_app_preferences(
                 "theme": theme,
                 "language": language,
                 "date_format": date_format,
+                "live_refresh_seconds": live_refresh_seconds,
             }.items()
             if value is not None
         }

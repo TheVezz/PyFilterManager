@@ -35,7 +35,7 @@ from frontend.components.hierarchy_dialogs import (
 NODE_LABELS = {
     "sede": "Sede",
     "reparto": "Reparto",
-    "linea": "Linea",
+    "impianto": "Impianto",
     "quadro_elettrico": "Quadro elettrico",
 }
 
@@ -43,6 +43,7 @@ NODE_LABELS = {
 class HierarchyTreeWidget(QWidget):
     SCROLLBAR_GUTTER = 24
     selection_changed = Signal(object)
+    data_changed = Signal()
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -96,6 +97,10 @@ class HierarchyTreeWidget(QWidget):
         return button
 
     def refresh(self, keep_selection: TreeNode | None = None) -> None:
+        expanded_nodes = self._expanded_nodes()
+        if keep_selection is None:
+            keep_selection = self.selected_node()
+
         self.tree.clear()
 
         nodes = load_hierarchy()
@@ -110,7 +115,7 @@ class HierarchyTreeWidget(QWidget):
         for node in nodes:
             self.tree.addTopLevelItem(self._create_item(node))
 
-        self.tree.collapseAll()
+        self._restore_expanded_nodes(expanded_nodes)
 
         if keep_selection:
             self._select_node(keep_selection.node_type, keep_selection.entity_id)
@@ -187,6 +192,30 @@ class HierarchyTreeWidget(QWidget):
                 return found
         return None
 
+    def _expanded_nodes(self) -> set[tuple[str, int]]:
+        expanded: set[tuple[str, int]] = set()
+        for index in range(self.tree.topLevelItemCount()):
+            self._collect_expanded_nodes(self.tree.topLevelItem(index), expanded)
+        return expanded
+
+    def _collect_expanded_nodes(
+        self,
+        item: QTreeWidgetItem,
+        expanded: set[tuple[str, int]],
+    ) -> None:
+        node = item.data(0, Qt.ItemDataRole.UserRole)
+        if isinstance(node, TreeNode) and item.isExpanded():
+            expanded.add((node.node_type, node.entity_id))
+
+        for index in range(item.childCount()):
+            self._collect_expanded_nodes(item.child(index), expanded)
+
+    def _restore_expanded_nodes(self, expanded_nodes: set[tuple[str, int]]) -> None:
+        for node_type, entity_id in expanded_nodes:
+            item = self._find_item(node_type, entity_id)
+            if item is not None:
+                item.setExpanded(True)
+
     def _show_error(self, message: str) -> None:
         InfoBar.error(
             "Errore",
@@ -214,6 +243,7 @@ class HierarchyTreeWidget(QWidget):
             try:
                 create_sede(validate_sede_create(name))
                 self.refresh()
+                self.data_changed.emit()
                 self._show_success("Sede creata.")
             except HierarchyCrudError as error:
                 self._show_error(str(error))
@@ -224,9 +254,10 @@ class HierarchyTreeWidget(QWidget):
             self._show_error("Non è possibile creare un elemento qui.")
             return
 
-        if node.node_type == "linea":
+        if node.node_type == "impianto":
             if prompt_quadro_filtro(self.window(), node.entity_id):
                 self.refresh(keep_selection=node)
+                self.data_changed.emit()
                 self._show_success("Quadro elettrico e filtro creati.")
             return
 
@@ -238,6 +269,7 @@ class HierarchyTreeWidget(QWidget):
         try:
             create_child(validate_child_create(node.node_type, node.entity_id, name))
             self.refresh(keep_selection=node)
+            self.data_changed.emit()
             self._show_success(f"{label} creato.")
         except HierarchyCrudError as error:
             self._show_error(str(error))
@@ -253,6 +285,7 @@ class HierarchyTreeWidget(QWidget):
             if not prompt_quadro_filtro_edit(self.window(), node.entity_id):
                 return
             self.refresh(keep_selection=node)
+            self.data_changed.emit()
             self._show_success(f"{label} aggiornato.")
             return
 
@@ -274,6 +307,7 @@ class HierarchyTreeWidget(QWidget):
                 children=node.children,
             )
             self.refresh(keep_selection=updated)
+            self.data_changed.emit()
             self._show_success(f"{label} aggiornato.")
         except HierarchyCrudError as error:
             self._show_error(str(error))
@@ -289,6 +323,7 @@ class HierarchyTreeWidget(QWidget):
         try:
             delete_entity(node.node_type, node.entity_id)
             self.refresh()
+            self.data_changed.emit()
             self._show_success("Elemento eliminato.")
         except HierarchyCrudError as error:
             self._show_error(str(error))
@@ -316,6 +351,7 @@ class HierarchyTreeWidget(QWidget):
         try:
             move_entity(validate_entity_move(node.node_type, node.entity_id, new_parent_id))
             self.refresh(keep_selection=node)
+            self.data_changed.emit()
             self._show_success(f"{label} spostato.")
         except HierarchyCrudError as error:
             self._show_error(str(error))

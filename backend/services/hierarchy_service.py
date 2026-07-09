@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 from backend.database.db_manager import get_session
-from backend.models import Linea, QuadroElettrico, Reparto, Sede
+from backend.models import Impianto, QuadroElettrico, Reparto, Sede
 from backend.schemas.hierarchy import TreeNode
 
 
@@ -12,8 +12,8 @@ def load_hierarchy() -> list[TreeNode]:
             select(Sede)
             .options(
                 selectinload(Sede.reparti)
-                .selectinload(Reparto.linee)
-                .selectinload(Linea.quadri_elettrici)
+                .selectinload(Reparto.impianti)
+                .selectinload(Impianto.quadri_elettrici)
             )
             .order_by(Sede.sede)
         ).all()
@@ -39,20 +39,20 @@ def _reparto_node(reparto: Reparto) -> TreeNode:
         node_type="reparto",
         entity_id=reparto.id,
         children=[
-            _linea_node(linea)
-            for linea in sorted(reparto.linee, key=lambda linea_item: linea_item.linea)
+            _impianto_node(impianto)
+            for impianto in sorted(reparto.impianti, key=lambda item: item.impianto)
         ],
     )
 
 
-def _linea_node(linea: Linea) -> TreeNode:
+def _impianto_node(impianto: Impianto) -> TreeNode:
     return TreeNode(
-        label=linea.linea,
-        node_type="linea",
-        entity_id=linea.id,
+        label=impianto.impianto,
+        node_type="impianto",
+        entity_id=impianto.id,
         children=[
             _quadro_node(quadro)
-            for quadro in sorted(linea.quadri_elettrici, key=lambda q: q.quadro_elettrico)
+            for quadro in sorted(impianto.quadri_elettrici, key=lambda q: q.quadro_elettrico)
         ],
     )
 

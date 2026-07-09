@@ -177,8 +177,8 @@ msgstr "Search by size"
 msgid "filtri.search.frequenza"
 msgstr "Search by frequency"
 
-msgid "filtri.search.linea"
-msgstr "Search by line"
+msgid "filtri.search.impianto"
+msgstr "Search by plant"
 
 msgid "filtri.search.quadro"
 msgstr "Search by panel"
@@ -225,8 +225,8 @@ msgstr "Home"
 msgid "nav.report"
 msgstr "Report"
 
-msgid "report.divider.linea"
-msgstr "Line · {name}"
+msgid "report.divider.impianto"
+msgstr "Plant · {name}"
 
 msgid "report.divider.reparto"
 msgstr "Department · {name}"
@@ -309,8 +309,8 @@ msgstr "Size"
 msgid "search.scope.frequenza"
 msgstr "Frequency"
 
-msgid "search.scope.linea"
-msgstr "Line"
+msgid "search.scope.impianto"
+msgstr "Plant"
 
 msgid "search.scope.multi"
 msgstr "{count} fields"
@@ -407,6 +407,24 @@ msgstr "mm/dd/yyyy"
 
 msgid "settings.date_preview"
 msgstr "Today's date preview: {sample}"
+
+msgid "settings.live_refresh"
+msgstr "Auto refresh"
+
+msgid "settings.live_refresh.help"
+msgstr "How often dashboard, report, and statuses refresh automatically."
+
+msgid "settings.live_refresh.15s"
+msgstr "Every 15 seconds"
+
+msgid "settings.live_refresh.30s"
+msgstr "Every 30 seconds"
+
+msgid "settings.live_refresh.60s"
+msgstr "Every 1 minute"
+
+msgid "settings.live_refresh.300s"
+msgstr "Every 5 minutes"
 
 msgid "settings.restart_title"
 msgstr "Restart required"

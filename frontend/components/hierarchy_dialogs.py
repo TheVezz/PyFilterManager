@@ -155,12 +155,12 @@ class TextInputDialog(QDialog):
 class QuadroFiltroDialog(QDialog):
     def __init__(
         self,
-        linea_id: int,
+        impianto_id: int,
         parent=None,
         edit_data: QuadroFiltroEditData | None = None,
     ) -> None:
         super().__init__(parent)
-        self._linea_id = linea_id
+        self._impianto_id = impianto_id
         self._edit_data = edit_data
         self._edit_mode = edit_data is not None
 
@@ -317,7 +317,7 @@ class QuadroFiltroDialog(QDialog):
 
         try:
             create_data = QuadroFiltroCreate(
-                linea_id=self._linea_id,
+                impianto_id=self._impianto_id,
                 quadro_elettrico=self.quadro_input.text(),
                 quantita_filtri=self.quantita_input.value(),
                 dimensione_filtri=self.dimensione_input.text(),
@@ -401,8 +401,8 @@ def prompt_text(
     return None
 
 
-def prompt_quadro_filtro(parent, linea_id: int) -> bool:
-    dialog = QuadroFiltroDialog(linea_id, parent)
+def prompt_quadro_filtro(parent, impianto_id: int) -> bool:
+    dialog = QuadroFiltroDialog(impianto_id, parent)
     return bool(dialog.exec())
 
 
@@ -413,7 +413,7 @@ def prompt_quadro_filtro_edit(parent, quadro_id: int) -> bool:
         _show_dialog_error(parent, str(error))
         return False
 
-    dialog = QuadroFiltroDialog(edit_data.linea_id, parent, edit_data=edit_data)
+    dialog = QuadroFiltroDialog(edit_data.impianto_id, parent, edit_data=edit_data)
     return bool(dialog.exec())
 
 

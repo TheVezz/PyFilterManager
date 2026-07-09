@@ -166,7 +166,7 @@ msgid "filtri.search.all"
 msgstr "Cerca in tutto"
 
 msgid "filtri.search.all_fields"
-msgstr "Cerca quadro, reparto, linea, dimensione, frequenza o quantità"
+msgstr "Cerca quadro, reparto, impianto, dimensione, frequenza o quantità"
 
 msgid "filtri.search.dimensione"
 msgstr "Cerca per dimensione"
@@ -174,8 +174,8 @@ msgstr "Cerca per dimensione"
 msgid "filtri.search.frequenza"
 msgstr "Cerca per frequenza"
 
-msgid "filtri.search.linea"
-msgstr "Cerca per linea"
+msgid "filtri.search.impianto"
+msgstr "Cerca per impianto"
 
 msgid "filtri.search.quadro"
 msgstr "Cerca per quadro"
@@ -222,8 +222,8 @@ msgstr "Home"
 msgid "nav.report"
 msgstr "Report"
 
-msgid "report.divider.linea"
-msgstr "Linea · {name}"
+msgid "report.divider.impianto"
+msgstr "Impianto · {name}"
 
 msgid "report.divider.reparto"
 msgstr "Reparto · {name}"
@@ -306,8 +306,8 @@ msgstr "Dimensione"
 msgid "search.scope.frequenza"
 msgstr "Frequenza"
 
-msgid "search.scope.linea"
-msgstr "Linea"
+msgid "search.scope.impianto"
+msgstr "Impianto"
 
 msgid "search.scope.multi"
 msgstr "{count} campi"

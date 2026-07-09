@@ -12,7 +12,7 @@ class FiltroCard(AppSchema):
     quadro_elettrico_id: int = Field(gt=0)
     quadro_elettrico: str = Field(min_length=1)
     reparto: str = Field(min_length=1)
-    linea: str = Field(min_length=1)
+    impianto: str = Field(min_length=1)
     quantita_filtri: int = Field(gt=0)
     dimensione_filtri: str = Field(min_length=1)
     frequenza_intervento: str = Field(min_length=1)
@@ -43,8 +43,8 @@ class QuadroFiltroDetail(AppSchema):
     quadro_elettrico: str = Field(min_length=1)
     sede: str = Field(min_length=1)
     reparto: str = Field(min_length=1)
-    linea: str = Field(min_length=1)
-    linea_id: int = Field(gt=0)
+    impianto: str = Field(min_length=1)
+    impianto_id: int = Field(gt=0)
     filtro_id: int | None = None
     quantita_filtri: int | None = None
     dimensione_filtri: str | None = None
@@ -59,22 +59,22 @@ class QuadroFiltroDetail(AppSchema):
     interventi: list[InterventoVoce] = Field(default_factory=list)
 
 
-class LineaFiltriSection(AppSchema):
-    linea_id: int = Field(gt=0)
-    linea: str = Field(min_length=1)
+class ImpiantoFiltriSection(AppSchema):
+    impianto_id: int = Field(gt=0)
+    impianto: str = Field(min_length=1)
     filtri: list[FiltroCard] = Field(default_factory=list)
 
 
 class RepartoFiltriSection(AppSchema):
     reparto_id: int = Field(gt=0)
     reparto: str = Field(min_length=1)
-    linee: list[LineaFiltriSection] = Field(default_factory=list)
+    impianti: list[ImpiantoFiltriSection] = Field(default_factory=list)
 
 
 class RepartoFiltriView(AppSchema):
     reparto_id: int = Field(gt=0)
     reparto: str = Field(min_length=1)
-    linee: list[LineaFiltriSection] = Field(default_factory=list)
+    impianti: list[ImpiantoFiltriSection] = Field(default_factory=list)
 
 
 class SedeFiltriView(AppSchema):
@@ -87,7 +87,7 @@ class ReportQuadroVoce(AppSchema):
     quadro_elettrico_id: int = Field(gt=0)
     quadro_elettrico: str = Field(min_length=1)
     reparto: str = Field(min_length=1)
-    linea: str = Field(min_length=1)
+    impianto: str = Field(min_length=1)
     dimensione_filtri: str = Field(min_length=1)
     quantita_filtri: int = Field(gt=0)
     frequenza_intervento: str = Field(min_length=1)

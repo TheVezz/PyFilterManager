@@ -8,7 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from backend.models.base import Base
 
 if TYPE_CHECKING:
-    from backend.models.linea import Linea
+    from backend.models.impianto import Impianto
     from backend.models.sede import Sede
 
 
@@ -20,7 +20,7 @@ class Reparto(Base):
     sede_id: Mapped[int] = mapped_column(ForeignKey("sede.id"), nullable=False)
 
     sede: Mapped["Sede"] = relationship(back_populates="reparti")
-    linee: Mapped[list["Linea"]] = relationship(
+    impianti: Mapped[list["Impianto"]] = relationship(
         back_populates="reparto",
         cascade="all, delete-orphan",
     )

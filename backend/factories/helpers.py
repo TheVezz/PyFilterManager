@@ -79,7 +79,7 @@ def _aggiungi_storico_interventi(filtro, storico_interventi: int) -> None:
 
 def crea_quadro_con_filtro(
     *,
-    linea,
+    impianto,
     quadro_elettrico: str,
     quantita_filtri: int,
     dimensione_filtri: str,
@@ -91,7 +91,7 @@ def crea_quadro_con_filtro(
     from backend.factories.factories import QuadroElettricoFactory
 
     quadro = QuadroElettricoFactory(
-        linea=linea,
+        impianto=impianto,
         quadro_elettrico=quadro_elettrico,
         quantita_filtri=quantita_filtri,
         dimensione_filtri=dimensione_filtri,

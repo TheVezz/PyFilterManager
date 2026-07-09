@@ -9,8 +9,8 @@ from sqlalchemy.orm import selectinload
 from backend.database.db_manager import get_session
 from backend.models import (
     Filtro,
+    Impianto,
     Intervento,
-    Linea,
     QuadroElettrico,
     Reparto,
     Sede,
@@ -31,21 +31,21 @@ from backend.schemas.hierarchy import (
 NODE_MODELS = {
     "sede": Sede,
     "reparto": Reparto,
-    "linea": Linea,
+    "impianto": Impianto,
     "quadro_elettrico": QuadroElettrico,
 }
 
 NAME_FIELDS = {
     "sede": "sede",
     "reparto": "reparto",
-    "linea": "linea",
+    "impianto": "impianto",
     "quadro_elettrico": "quadro_elettrico",
 }
 
 PARENT_FIELDS = {
     "reparto": "sede_id",
-    "linea": "reparto_id",
-    "quadro_elettrico": "linea_id",
+    "impianto": "reparto_id",
+    "quadro_elettrico": "impianto_id",
 }
 
 
@@ -64,22 +64,17 @@ def _apply_preavviso_filtro(filtro: Filtro, data: PreavvisoFiltroInput) -> None:
     filtro.preavviso_massimo_giorni = data.preavviso_massimo_giorni
 
 
-def get_quadro_linea_id(quadro_id: int) -> int:
+def get_quadro_impianto_id(quadro_id: int) -> int:
     with get_session() as session:
         quadro = session.get(QuadroElettrico, quadro_id)
         if quadro is None:
             raise HierarchyCrudError("Quadro elettrico non trovato.")
-        return quadro.linea_id
+        return quadro.impianto_id
 
 
-def _quadro_name_taken(
-    session,
-    linea_id: int,
-    name: str,
-    exclude_id: int | None = None,
-) -> bool:
+def _quadro_name_taken(session, impianto_id: int, name: str, exclude_id: int | None = None) -> bool:
     stmt = select(QuadroElettrico.id).where(
-        QuadroElettrico.linea_id == linea_id,
+        QuadroElettrico.impianto_id == impianto_id,
         func.lower(QuadroElettrico.quadro_elettrico) == name.strip().lower(),
     )
     if exclude_id is not None:
@@ -87,14 +82,10 @@ def _quadro_name_taken(
     return session.scalar(stmt.limit(1)) is not None
 
 
-def check_quadro_name_available(
-    linea_id: int,
-    name: str,
-    exclude_id: int | None = None,
-) -> str | None:
+def check_quadro_name_available(impianto_id: int, name: str, exclude_id: int | None = None) -> str | None:
     with get_session() as session:
-        if _quadro_name_taken(session, linea_id, name, exclude_id):
-            return "Un quadro elettrico con questo nome esiste già in questa linea."
+        if _quadro_name_taken(session, impianto_id, name, exclude_id):
+            return "Un quadro elettrico con questo nome esiste già in questo impianto."
     return None
 
 
@@ -131,17 +122,17 @@ def create_child(data: ChildCreate) -> int:
 
 def create_quadro_with_filtro(data: QuadroFiltroCreate) -> int:
     with get_session() as session:
-        linea = session.get(Linea, data.linea_id)
-        if linea is None:
-            raise HierarchyCrudError("Linea non trovata.")
+        impianto = session.get(Impianto, data.impianto_id)
+        if impianto is None:
+            raise HierarchyCrudError("Impianto non trovato.")
 
-        if _quadro_name_taken(session, data.linea_id, data.quadro_elettrico):
+        if _quadro_name_taken(session, data.impianto_id, data.quadro_elettrico):
             raise HierarchyCrudError(
-                "Un quadro elettrico con questo nome esiste già in questa linea."
+                "Un quadro elettrico con questo nome esiste già in questo impianto."
             )
 
         quadro = QuadroElettrico(
-            linea_id=data.linea_id,
+            impianto_id=data.impianto_id,
             quadro_elettrico=data.quadro_elettrico,
         )
         session.add(quadro)
@@ -181,7 +172,7 @@ def load_quadro_filtro_edit(quadro_id: int) -> QuadroFiltroEditData:
 
         return QuadroFiltroEditData(
             quadro_elettrico_id=quadro.id,
-            linea_id=quadro.linea_id,
+            impianto_id=quadro.impianto_id,
             quadro_elettrico=quadro.quadro_elettrico,
             filtro_id=filtro.id if filtro else None,
             quantita_filtri=filtro.quantita_filtri if filtro else 1,
@@ -209,12 +200,12 @@ def update_quadro_with_filtro(data: QuadroFiltroUpdate) -> None:
 
         if _quadro_name_taken(
             session,
-            quadro.linea_id,
+            quadro.impianto_id,
             data.quadro_elettrico,
             exclude_id=data.quadro_elettrico_id,
         ):
             raise HierarchyCrudError(
-                "Un quadro elettrico con questo nome esiste già in questa linea."
+                "Un quadro elettrico con questo nome esiste già in questo impianto."
             )
 
         quadro.quadro_elettrico = data.quadro_elettrico
@@ -253,12 +244,12 @@ def update_entity(data: EntityRename) -> None:
             quadro = cast(QuadroElettrico, entity)
             if _quadro_name_taken(
                 session,
-                quadro.linea_id,
+                quadro.impianto_id,
                 data.name,
                 exclude_id=data.entity_id,
             ):
                 raise HierarchyCrudError(
-                    "Un quadro elettrico con questo nome esiste già in questa linea."
+                    "Un quadro elettrico con questo nome esiste già in questo impianto."
                 )
 
         setattr(entity, name_field, data.name)
@@ -297,7 +288,7 @@ def move_entity(data: EntityMove) -> None:
                 exclude_id=data.entity_id,
             ):
                 raise HierarchyCrudError(
-                    "Un quadro elettrico con questo nome esiste già nella linea "
+                    "Un quadro elettrico con questo nome esiste già nell'impianto "
                     "di destinazione."
                 )
 
@@ -314,10 +305,10 @@ def list_move_targets(node_type: str, entity_id: int) -> list[tuple[int, str]]:
             sedi = session.scalars(select(Sede).order_by(Sede.sede)).all()
             return [(sede.id, sede.sede) for sede in sedi if sede.id != reparto.sede_id]
 
-        if node_type == "linea":
-            linea = session.get(Linea, entity_id)
-            if linea is None:
-                raise HierarchyCrudError("Linea non trovata.")
+        if node_type == "impianto":
+            impianto = session.get(Impianto, entity_id)
+            if impianto is None:
+                raise HierarchyCrudError("Impianto non trovato.")
             reparti = session.scalars(
                 select(Reparto)
                 .options(selectinload(Reparto.sede))
@@ -326,28 +317,28 @@ def list_move_targets(node_type: str, entity_id: int) -> list[tuple[int, str]]:
             return [
                 (reparto.id, f"{reparto.sede.sede} / {reparto.reparto}")
                 for reparto in reparti
-                if reparto.id != linea.reparto_id
+                if reparto.id != impianto.reparto_id
             ]
 
         if node_type == "quadro_elettrico":
             quadro = session.get(QuadroElettrico, entity_id)
             if quadro is None:
                 raise HierarchyCrudError("Quadro elettrico non trovato.")
-            linee = session.scalars(
-                select(Linea)
-                .options(selectinload(Linea.reparto).selectinload(Reparto.sede))
-                .order_by(Linea.linea)
+            impianti = session.scalars(
+                select(Impianto)
+                .options(selectinload(Impianto.reparto).selectinload(Reparto.sede))
+                .order_by(Impianto.impianto)
             ).all()
             return [
                 (
-                    linea.id,
+                    impianto.id,
                     (
-                        f"{linea.reparto.sede.sede} / "
-                        f"{linea.reparto.reparto} / {linea.linea}"
+                        f"{impianto.reparto.sede.sede} / "
+                        f"{impianto.reparto.reparto} / {impianto.impianto}"
                     ),
                 )
-                for linea in linee
-                if linea.id != quadro.linea_id
+                for impianto in impianti
+                if impianto.id != quadro.impianto_id
             ]
 
     raise HierarchyCrudError(f"Non è possibile spostare '{node_type}'.")

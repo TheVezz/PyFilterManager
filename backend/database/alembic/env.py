@@ -6,8 +6,8 @@ from backend.database.db_manager import DATABASE_URL
 from backend.models import (  # noqa: F401
     Base,
     Filtro,
+    Impianto,
     Intervento,
-    Linea,
     QuadroElettrico,
     Reparto,
     Sede,

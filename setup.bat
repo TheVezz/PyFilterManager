@@ -50,17 +50,19 @@ echo   [2] dev
 echo   [3] audit
 echo   [4] security
 echo   [5] quality
+echo   [8] all
 echo.
 echo   [6] Indietro
 echo   [7] Esci
 echo.
 echo Inserisci uno o piu numeri separati da virgola.
-echo Esempi: 1   2,3   2,3,4,5
+echo Esempi: 1   2,3   2,3,4,5   8
 echo.
-set /p EXTRAS_INPUT="Profili da installare [1,6,7]: "
+set /p EXTRAS_INPUT="Profili da installare [1,6,7,8]: "
 if "%EXTRAS_INPUT%"=="" set "EXTRAS_INPUT=1"
 if "%EXTRAS_INPUT%"=="6" goto :main_menu
 if "%EXTRAS_INPUT%"=="7" goto :end
+if "%EXTRAS_INPUT%"=="8" set "EXTRAS_INPUT=2,3,4,5"
 
 :resolve_extras
 call :build_install_target "%EXTRAS_INPUT%"
@@ -104,7 +106,10 @@ if not exist "%PYTHON_EXE%" (
 
 echo [3/5] Aggiorno pip...
 call "%PYTHON_EXE%" -m pip install --upgrade pip
-if errorlevel 1 goto :fail
+if errorlevel 1 (
+    echo.
+    echo Avviso: aggiornamento pip non riuscito, continuo con la versione corrente.
+)
 
 echo [4/5] Installo il progetto (%INSTALL_TARGET%)...
 call "%PIP_EXE%" install "%INSTALL_TARGET%"
@@ -300,6 +305,7 @@ echo   4 = security
 echo   5 = quality
 echo   6 = indietro
 echo   7 = esci
+echo   8 = all
 echo.
 echo Esempi validi:
 echo   1
@@ -307,6 +313,7 @@ echo   2,3
 echo   2,4
 echo   2,3,4
 echo   2,3,4,5
+echo   8
 exit /b 1
 
 :end

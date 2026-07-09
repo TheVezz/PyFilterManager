@@ -9,7 +9,7 @@ from backend.models.base import Base
 
 if TYPE_CHECKING:
     from backend.models.filtro import Filtro
-    from backend.models.linea import Linea
+    from backend.models.impianto import Impianto
 
 
 class QuadroElettrico(Base):
@@ -17,9 +17,9 @@ class QuadroElettrico(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     quadro_elettrico: Mapped[str] = mapped_column(String, nullable=False)
-    linea_id: Mapped[int] = mapped_column(ForeignKey("linea.id"), nullable=False)
+    impianto_id: Mapped[int] = mapped_column(ForeignKey("impianto.id"), nullable=False)
 
-    linea: Mapped["Linea"] = relationship(back_populates="quadri_elettrici")
+    impianto: Mapped["Impianto"] = relationship(back_populates="quadri_elettrici")
     filtri: Mapped[list["Filtro"]] = relationship(
         back_populates="quadro_elettrico",
         cascade="all, delete-orphan",

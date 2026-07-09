@@ -33,9 +33,9 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
-        "linea",
+        "impianto",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
-        sa.Column("linea", sa.String(), nullable=False),
+        sa.Column("impianto", sa.String(), nullable=False),
         sa.Column("reparto_id", sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(["reparto_id"], ["reparto.id"]),
         sa.PrimaryKeyConstraint("id"),
@@ -44,8 +44,8 @@ def upgrade() -> None:
         "quadro_elettrico",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("quadro_elettrico", sa.String(), nullable=False),
-        sa.Column("linea_id", sa.Integer(), nullable=False),
-        sa.ForeignKeyConstraint(["linea_id"], ["linea.id"]),
+        sa.Column("impianto_id", sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(["impianto_id"], ["impianto.id"]),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
@@ -72,6 +72,6 @@ def downgrade() -> None:
     op.drop_table("interventi")
     op.drop_table("filtri")
     op.drop_table("quadro_elettrico")
-    op.drop_table("linea")
+    op.drop_table("impianto")
     op.drop_table("reparto")
     op.drop_table("sede")

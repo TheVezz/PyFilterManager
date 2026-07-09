@@ -6,11 +6,11 @@ from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout, QWidget
 from qfluentwidgets import AdaptiveFlowLayout, BodyLabel, ScrollArea
 from qfluentwidgets.components.widgets.scroll_bar import ScrollBarHandleDisplayMode
 
-from backend.schemas.filtri import FiltroCard, LineaFiltriSection, RepartoFiltriSection
+from backend.schemas.filtri import FiltroCard, ImpiantoFiltriSection, RepartoFiltriSection
 from backend.schemas.hierarchy import TreeNode
 from backend.schemas.stato_filtro import FiltroStato
 from backend.services.filtri_service import (
-    load_filtri_by_linea,
+    load_filtri_by_impianto,
     load_filtri_by_reparto,
     load_filtri_by_sede,
     load_quadro_detail,
@@ -54,6 +54,7 @@ class FiltriGridPanel(QWidget):
     header_changed = Signal(str)
     content_changed = Signal()
     detail_navigation_changed = Signal()
+    data_changed = Signal()
     quadro_opened = Signal(int)
 
     def __init__(self, parent=None) -> None:
@@ -68,7 +69,7 @@ class FiltriGridPanel(QWidget):
         self._state_filters: list[FiltroStato] = []
         self._current_view_type: str | None = None
         self._current_view_data: (
-            list[RepartoFiltriSection] | list[LineaFiltriSection] | None
+            list[RepartoFiltriSection] | list[ImpiantoFiltriSection] | None
         ) = None
 
         self.content_layout = QVBoxLayout(self)
@@ -77,7 +78,7 @@ class FiltriGridPanel(QWidget):
         self.content_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self._detail_panel = QuadroDetailPanel(self)
-        self._detail_panel.interventi_changed.connect(self._reload_quadro_detail)
+        self._detail_panel.interventi_changed.connect(self._on_interventi_changed)
 
     def hasHeightForWidth(self) -> bool:
         return True
@@ -150,8 +151,8 @@ class FiltriGridPanel(QWidget):
                 self._show_placeholder("Reparto non trovato.")
                 self.header_changed.emit("Filtri")
                 return
-            self._current_view_type = "linee"
-            self._current_view_data = reparto_view.linee
+            self._current_view_type = "impianti"
+            self._current_view_data = reparto_view.impianti
             self.header_changed.emit(reparto_view.reparto)
             self._apply_current_view()
             return
@@ -170,17 +171,17 @@ class FiltriGridPanel(QWidget):
             self._apply_current_view()
             return
 
-        if node.node_type == "linea":
-            section = load_filtri_by_linea(node.entity_id)
+        if node.node_type == "impianto":
+            section = load_filtri_by_impianto(node.entity_id)
             if section is None:
                 self._current_view_type = None
                 self._current_view_data = None
-                self._show_placeholder("Linea non trovata.")
+                self._show_placeholder("Impianto non trovato.")
                 self.header_changed.emit("Filtri")
                 return
-            self._current_view_type = "linee"
+            self._current_view_type = "impianti"
             self._current_view_data = [section]
-            self.header_changed.emit(section.linea)
+            self.header_changed.emit(section.impianto)
             self._apply_current_view()
             return
 
@@ -215,6 +216,10 @@ class FiltriGridPanel(QWidget):
             return
         self._show_quadro_detail(self._detail_quadro_id)
 
+    def _on_interventi_changed(self) -> None:
+        self._reload_quadro_detail()
+        self.data_changed.emit()
+
     def _on_card_clicked(self, quadro_id: int) -> None:
         self._show_quadro_detail(quadro_id)
         self.quadro_opened.emit(quadro_id)
@@ -243,7 +248,7 @@ class FiltriGridPanel(QWidget):
         has_cards = False
 
         for reparto in reparti:
-            reparto_cards = [card for linea in reparto.linee for card in linea.filtri]
+            reparto_cards = [card for impianto in reparto.impianti for card in impianto.filtri]
             if not reparto_cards:
                 continue
 
@@ -251,29 +256,29 @@ class FiltriGridPanel(QWidget):
             self.content_layout.addWidget(
                 SectionDivider(f"Reparto · {reparto.reparto}", self)
             )
-            self._append_linee_sections(reparto.linee)
+            self._append_impianti_sections(reparto.impianti)
 
         if not has_cards:
             self._append_empty_state("Nessun filtro presente in questa sede.")
         self._refresh_layout()
 
-    def _render_linee_sections(self, linee: list[LineaFiltriSection]) -> None:
+    def _render_impianti_sections(self, impianti: list[ImpiantoFiltriSection]) -> None:
         self._clear_content()
-        self._append_linee_sections(linee)
+        self._append_impianti_sections(impianti)
         self._refresh_layout()
 
-    def _append_linee_sections(self, linee: list[LineaFiltriSection]) -> None:
+    def _append_impianti_sections(self, impianti: list[ImpiantoFiltriSection]) -> None:
         has_cards = False
 
-        for linea in linee:
-            if not linea.filtri:
+        for impianto in impianti:
+            if not impianto.filtri:
                 continue
 
             has_cards = True
             self.content_layout.addWidget(
-                SectionDivider(f"Linea · {linea.linea}", self)
+                SectionDivider(f"Impianto · {impianto.impianto}", self)
             )
-            self.content_layout.addWidget(self._build_cards_grid(linea.filtri))
+            self.content_layout.addWidget(self._build_cards_grid(impianto.filtri))
 
         if not has_cards:
             self._append_empty_state("Nessun filtro presente in questo reparto.")
@@ -287,11 +292,11 @@ class FiltriGridPanel(QWidget):
             )
             self._render_reparti_sections(reparti)
             return
-        if self._current_view_type == "linee":
-            linee = self._filter_linee(
-                cast(list[LineaFiltriSection], self._current_view_data or [])
+        if self._current_view_type == "impianti":
+            impianti = self._filter_impianti(
+                cast(list[ImpiantoFiltriSection], self._current_view_data or [])
             )
-            self._render_linee_sections(linee)
+            self._render_impianti_sections(impianti)
 
     def _filter_reparti(
         self,
@@ -299,29 +304,29 @@ class FiltriGridPanel(QWidget):
     ) -> list[RepartoFiltriSection]:
         filtered: list[RepartoFiltriSection] = []
         for reparto in reparti:
-            linee = self._filter_linee(reparto.linee)
-            if linee:
+            impianti = self._filter_impianti(reparto.impianti)
+            if impianti:
                 filtered.append(
                     RepartoFiltriSection(
                         reparto_id=reparto.reparto_id,
                         reparto=reparto.reparto,
-                        linee=linee,
+                        impianti=impianti,
                     )
                 )
         return filtered
 
-    def _filter_linee(
+    def _filter_impianti(
         self,
-        linee: Sequence[LineaFiltriSection],
-    ) -> list[LineaFiltriSection]:
-        filtered: list[LineaFiltriSection] = []
-        for linea in linee:
-            cards = [card for card in linea.filtri if self._matches_card(card)]
+        impianti: Sequence[ImpiantoFiltriSection],
+    ) -> list[ImpiantoFiltriSection]:
+        filtered: list[ImpiantoFiltriSection] = []
+        for impianto in impianti:
+            cards = [card for card in impianto.filtri if self._matches_card(card)]
             if cards:
                 filtered.append(
-                    LineaFiltriSection(
-                        linea_id=linea.linea_id,
-                        linea=linea.linea,
+                    ImpiantoFiltriSection(
+                        impianto_id=impianto.impianto_id,
+                        impianto=impianto.impianto,
                         filtri=cards,
                     )
                 )
@@ -337,7 +342,7 @@ class FiltriGridPanel(QWidget):
         fields = {
             "quadro": card.quadro_elettrico,
             "reparto": card.reparto,
-            "linea": card.linea,
+            "impianto": card.impianto,
             "dimensione": card.dimensione_filtri,
             "frequenza": card.frequenza_intervento,
             "quantita": str(card.quantita_filtri),

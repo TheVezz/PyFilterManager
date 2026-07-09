@@ -5,12 +5,12 @@ from sqlalchemy.orm import selectinload
 
 from backend.database.db_manager import get_session
 from backend.i18n import report_title
-from backend.models import Filtro, Linea, QuadroElettrico, Reparto, Sede
+from backend.models import Filtro, Impianto, QuadroElettrico, Reparto, Sede
 from backend.schemas.filtri import (
     FiltroCard,
     HomeStatusSummary,
+    ImpiantoFiltriSection,
     InterventoVoce,
-    LineaFiltriSection,
     QuadroFiltroDetail,
     RepartoFiltriSection,
     RepartoFiltriView,
@@ -40,14 +40,14 @@ def _ultimo_intervento(filtro: Filtro):
 def _filtro_card(quadro: QuadroElettrico, filtro: Filtro) -> FiltroCard:
     ultimo = _ultimo_intervento(filtro)
     config = config_preavviso_per_filtro(filtro)
-    linea = quadro.linea
-    reparto = linea.reparto
+    impianto = quadro.impianto
+    reparto = impianto.reparto
     return FiltroCard(
         filtro_id=filtro.id,
         quadro_elettrico_id=quadro.id,
         quadro_elettrico=quadro.quadro_elettrico,
         reparto=reparto.reparto,
-        linea=linea.linea,
+        impianto=impianto.impianto,
         quantita_filtri=filtro.quantita_filtri,
         dimensione_filtri=filtro.dimensione_filtri,
         frequenza_intervento=filtro.frequenza_intervento,
@@ -68,11 +68,11 @@ def _filtro_cards_from_quadri(quadri: list[QuadroElettrico]) -> list[FiltroCard]
     return cards
 
 
-def _linea_section(linea: Linea) -> LineaFiltriSection:
-    return LineaFiltriSection(
-        linea_id=linea.id,
-        linea=linea.linea,
-        filtri=_filtro_cards_from_quadri(linea.quadri_elettrici),
+def _impianto_section(impianto: Impianto) -> ImpiantoFiltriSection:
+    return ImpiantoFiltriSection(
+        impianto_id=impianto.id,
+        impianto=impianto.impianto,
+        filtri=_filtro_cards_from_quadri(impianto.quadri_elettrici),
     )
 
 
@@ -81,8 +81,8 @@ def load_filtri_by_reparto(reparto_id: int) -> RepartoFiltriView | None:
         reparto = session.scalar(
             select(Reparto)
             .options(
-                selectinload(Reparto.linee)
-                .selectinload(Linea.quadri_elettrici)
+                selectinload(Reparto.impianti)
+                .selectinload(Impianto.quadri_elettrici)
                 .selectinload(QuadroElettrico.filtri)
                 .selectinload(Filtro.interventi)
             )
@@ -91,14 +91,14 @@ def load_filtri_by_reparto(reparto_id: int) -> RepartoFiltriView | None:
         if reparto is None:
             return None
 
-        linee = [
-            _linea_section(linea)
-            for linea in sorted(reparto.linee, key=lambda item: item.linea)
+        impianti = [
+            _impianto_section(impianto)
+            for impianto in sorted(reparto.impianti, key=lambda item: item.impianto)
         ]
         return RepartoFiltriView(
             reparto_id=reparto.id,
             reparto=reparto.reparto,
-            linee=linee,
+            impianti=impianti,
         )
 
 
@@ -108,8 +108,8 @@ def load_filtri_by_sede(sede_id: int) -> SedeFiltriView | None:
             select(Sede)
             .options(
                 selectinload(Sede.reparti)
-                .selectinload(Reparto.linee)
-                .selectinload(Linea.quadri_elettrici)
+                .selectinload(Reparto.impianti)
+                .selectinload(Impianto.quadri_elettrici)
                 .selectinload(QuadroElettrico.filtri)
                 .selectinload(Filtro.interventi)
             )
@@ -120,35 +120,35 @@ def load_filtri_by_sede(sede_id: int) -> SedeFiltriView | None:
 
         reparti = []
         for reparto in sorted(sede.reparti, key=lambda item: item.reparto):
-            linee = [
-                _linea_section(linea)
-                for linea in sorted(reparto.linee, key=lambda item: item.linea)
+            impianti = [
+                _impianto_section(impianto)
+                for impianto in sorted(reparto.impianti, key=lambda item: item.impianto)
             ]
             reparti.append(
                 RepartoFiltriSection(
                     reparto_id=reparto.id,
                     reparto=reparto.reparto,
-                    linee=linee,
+                    impianti=impianti,
                 )
             )
 
         return SedeFiltriView(sede_id=sede.id, sede=sede.sede, reparti=reparti)
 
 
-def load_filtri_by_linea(linea_id: int) -> LineaFiltriSection | None:
+def load_filtri_by_impianto(impianto_id: int) -> ImpiantoFiltriSection | None:
     with get_session() as session:
-        linea = session.scalar(
-            select(Linea)
+        impianto = session.scalar(
+            select(Impianto)
             .options(
-                selectinload(Linea.quadri_elettrici)
+                selectinload(Impianto.quadri_elettrici)
                 .selectinload(QuadroElettrico.filtri)
                 .selectinload(Filtro.interventi)
             )
-            .where(Linea.id == linea_id)
+            .where(Impianto.id == impianto_id)
         )
-        if linea is None:
+        if impianto is None:
             return None
-        return _linea_section(linea)
+        return _impianto_section(impianto)
 
 
 def load_filtri_by_quadro(quadro_id: int) -> list[FiltroCard]:
@@ -157,7 +157,7 @@ def load_filtri_by_quadro(quadro_id: int) -> list[FiltroCard]:
             select(QuadroElettrico)
             .options(
                 selectinload(QuadroElettrico.filtri).selectinload(Filtro.interventi),
-                selectinload(QuadroElettrico.linea).selectinload(Linea.reparto),
+                selectinload(QuadroElettrico.impianto).selectinload(Impianto.reparto),
             )
             .where(QuadroElettrico.id == quadro_id)
         )
@@ -172,8 +172,8 @@ def load_quadro_detail(quadro_id: int) -> QuadroFiltroDetail | None:
             select(QuadroElettrico)
             .options(
                 selectinload(QuadroElettrico.filtri).selectinload(Filtro.interventi),
-                selectinload(QuadroElettrico.linea)
-                .selectinload(Linea.reparto)
+                selectinload(QuadroElettrico.impianto)
+                .selectinload(Impianto.reparto)
                 .selectinload(Reparto.sede),
             )
             .where(QuadroElettrico.id == quadro_id)
@@ -181,8 +181,8 @@ def load_quadro_detail(quadro_id: int) -> QuadroFiltroDetail | None:
         if quadro is None:
             return None
 
-        linea = quadro.linea
-        reparto = linea.reparto
+        impianto = quadro.impianto
+        reparto = impianto.reparto
         sede = reparto.sede
         filtro = quadro.filtri[0] if quadro.filtri else None
 
@@ -217,8 +217,8 @@ def load_quadro_detail(quadro_id: int) -> QuadroFiltroDetail | None:
             quadro_elettrico=quadro.quadro_elettrico,
             sede=sede.sede,
             reparto=reparto.reparto,
-            linea=linea.linea,
-            linea_id=linea.id,
+            impianto=impianto.impianto,
+            impianto_id=impianto.id,
             filtro_id=filtro.id if filtro else None,
             quantita_filtri=filtro.quantita_filtri if filtro else None,
             dimensione_filtri=filtro.dimensione_filtri if filtro else None,
@@ -245,8 +245,8 @@ def load_report_summary(states: list[ReportFilterState] | None = None) -> Report
         quadri = session.scalars(
             select(QuadroElettrico).options(
                 selectinload(QuadroElettrico.filtri).selectinload(Filtro.interventi),
-                selectinload(QuadroElettrico.linea)
-                .selectinload(Linea.reparto)
+                selectinload(QuadroElettrico.impianto)
+                .selectinload(Impianto.reparto)
                 .selectinload(Reparto.sede),
             )
         ).all()
@@ -290,8 +290,8 @@ def load_report_summary(states: list[ReportFilterState] | None = None) -> Report
             ReportQuadroVoce(
                 quadro_elettrico_id=quadro.id,
                 quadro_elettrico=quadro.quadro_elettrico,
-                reparto=quadro.linea.reparto.reparto,
-                linea=quadro.linea.linea,
+                reparto=quadro.impianto.reparto.reparto,
+                impianto=quadro.impianto.impianto,
                 dimensione_filtri=filtro.dimensione_filtri,
                 quantita_filtri=filtro.quantita_filtri,
                 frequenza_intervento=filtro.frequenza_intervento,

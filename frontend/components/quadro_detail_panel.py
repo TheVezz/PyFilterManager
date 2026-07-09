@@ -199,7 +199,7 @@ class QuadroDetailPanel(QWidget):
     def set_detail(self, detail: QuadroFiltroDetail) -> None:
         self._detail = detail
         self.path_label.setText(
-            f"{detail.sede} · {detail.reparto} · {detail.linea}"
+            f"{detail.sede} · {detail.reparto} · {detail.impianto}"
         )
         self._set_badge(detail.stato)
         self._rebuild_info_rows(detail)

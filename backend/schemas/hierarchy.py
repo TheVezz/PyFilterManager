@@ -5,15 +5,15 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from backend.schemas.frequenza import normalize_frequenza_intervento
 
-NodeType = Literal["sede", "reparto", "linea", "quadro_elettrico"]
+NodeType = Literal["sede", "reparto", "impianto", "quadro_elettrico"]
 
 CHILD_NODE_TYPES: dict[NodeType, NodeType] = {
     "sede": "reparto",
-    "reparto": "linea",
-    "linea": "quadro_elettrico",
+    "reparto": "impianto",
+    "impianto": "quadro_elettrico",
 }
 
-MOVABLE_NODE_TYPES: set[NodeType] = {"reparto", "linea", "quadro_elettrico"}
+MOVABLE_NODE_TYPES: set[NodeType] = {"reparto", "impianto", "quadro_elettrico"}
 
 DIMENSIONE_FILTRI_PATTERN = r"^\d+x\d+$"
 
@@ -77,7 +77,7 @@ class EntityMove(AppSchema):
 
 
 class QuadroFiltroCreate(PreavvisoFiltroInput):
-    linea_id: int = Field(gt=0)
+    impianto_id: int = Field(gt=0)
     quadro_elettrico: str = Field(min_length=1)
     quantita_filtri: int = Field(gt=0)
     dimensione_filtri: str = Field(
@@ -113,7 +113,7 @@ class QuadroFiltroUpdate(PreavvisoFiltroInput):
 
 class QuadroFiltroEditData(AppSchema):
     quadro_elettrico_id: int = Field(gt=0)
-    linea_id: int = Field(gt=0)
+    impianto_id: int = Field(gt=0)
     quadro_elettrico: str = Field(min_length=1)
     filtro_id: int | None = None
     quantita_filtri: int = Field(default=1, gt=0)

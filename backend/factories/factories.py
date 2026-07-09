@@ -9,7 +9,7 @@ from backend.factories.helpers import (
     data_ultimo_intervento_per_stato,
 )
 from backend.factories.session import get_factory_session, register_factory
-from backend.models import Filtro, Intervento, Linea, QuadroElettrico, Reparto, Sede
+from backend.models import Filtro, Impianto, Intervento, QuadroElettrico, Reparto, Sede
 
 
 class _BaseFactory(SQLAlchemyModelFactory):
@@ -38,12 +38,12 @@ class RepartoFactory(_BaseFactory):
 
 
 @register_factory
-class LineaFactory(_BaseFactory):
+class ImpiantoFactory(_BaseFactory):
     class Meta:
-        model = Linea
+        model = Impianto
         sqlalchemy_session = get_factory_session()
 
-    linea = factory.Sequence(lambda n: f"Linea {n}")
+    impianto = factory.Sequence(lambda n: f"Impianto {n}")
     reparto = factory.SubFactory(RepartoFactory)
 
 
@@ -113,7 +113,7 @@ class QuadroElettricoFactory(_BaseFactory):
         frequenza_intervento = factory.Iterator(FREQUENZE_VALIDHE)
 
     quadro_elettrico = factory.Sequence(lambda n: f"Quadro {n}")
-    linea = factory.SubFactory(LineaFactory)
+    impianto = factory.SubFactory(ImpiantoFactory)
 
     filtro = factory.RelatedFactory(
         FiltroFactory,

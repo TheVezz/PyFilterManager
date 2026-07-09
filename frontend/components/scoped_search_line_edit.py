@@ -25,7 +25,7 @@ class ScopedSearchLineEdit(SearchLineEdit):
             ("all", tr("search.scope.all")),
             ("quadro", tr("search.scope.quadro")),
             ("reparto", tr("search.scope.reparto")),
-            ("linea", tr("search.scope.linea")),
+            ("impianto", tr("search.scope.impianto")),
             ("dimensione", tr("search.scope.dimensione")),
             ("frequenza", tr("search.scope.frequenza")),
             ("quantita", tr("search.scope.quantita")),

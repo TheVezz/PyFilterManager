@@ -174,25 +174,25 @@ class ReportCardsGridWidget(QWidget):
         return self._flow.heightForWidth(width)
 
 
-def _group_voci_by_reparto_linea(
+def _group_voci_by_reparto_impianto(
     voci: list[ReportQuadroVoce],
 ) -> list[tuple[str, list[tuple[str, list[ReportQuadroVoce]]]]]:
     grouped: dict[str, dict[str, list[ReportQuadroVoce]]] = defaultdict(
         lambda: defaultdict(list)
     )
     for voce in voci:
-        grouped[voce.reparto][voce.linea].append(voce)
+        grouped[voce.reparto][voce.impianto].append(voce)
 
     ordered: list[tuple[str, list[tuple[str, list[ReportQuadroVoce]]]]] = []
     for reparto in sorted(grouped):
-        linee: list[tuple[str, list[ReportQuadroVoce]]] = []
-        for linea in sorted(grouped[reparto]):
+        impianti: list[tuple[str, list[ReportQuadroVoce]]] = []
+        for impianto in sorted(grouped[reparto]):
             cards = sorted(
-                grouped[reparto][linea],
+                grouped[reparto][impianto],
                 key=lambda item: item.quadro_elettrico,
             )
-            linee.append((linea, cards))
-        ordered.append((reparto, linee))
+            impianti.append((impianto, cards))
+        ordered.append((reparto, impianti))
     return ordered
 
 
@@ -327,18 +327,18 @@ class PrintableReportPage(QFrame):
             empty_label.setWordWrap(True)
             results_layout.addWidget(empty_label)
         else:
-            grouped_linee = _group_voci_by_reparto_linea(summary.quadri_scaduti_voci)
-            for reparto, linee in grouped_linee:
+            grouped_impianti = _group_voci_by_reparto_impianto(summary.quadri_scaduti_voci)
+            for reparto, impianti in grouped_impianti:
                 results_layout.addWidget(
                     self._create_divider(
                         tr("report.divider.reparto", name=reparto),
                         results_card,
                     )
                 )
-                for linea, cards in linee:
+                for impianto, cards in impianti:
                     results_layout.addWidget(
                         self._create_divider(
-                            tr("report.divider.linea", name=linea),
+                            tr("report.divider.impianto", name=impianto),
                             results_card,
                         )
                     )
@@ -575,8 +575,8 @@ class ReportInterface(QFrame):
         self.cards_scroll.setVisible(bool(summary.quadri_scaduti_voci))
 
         if summary.quadri_scaduti_voci:
-            grouped_linee = _group_voci_by_reparto_linea(summary.quadri_scaduti_voci)
-            for reparto, linee in grouped_linee:
+            grouped_impianti = _group_voci_by_reparto_impianto(summary.quadri_scaduti_voci)
+            for reparto, impianti in grouped_impianti:
                 self.cards_layout.addWidget(
                     SectionDivider(
                         tr("report.divider.reparto", name=reparto),
@@ -585,10 +585,10 @@ class ReportInterface(QFrame):
                     0,
                     Qt.AlignmentFlag.AlignTop,
                 )
-                for linea, cards in linee:
+                for impianto, cards in impianti:
                     self.cards_layout.addWidget(
                         SectionDivider(
-                            tr("report.divider.linea", name=linea),
+                            tr("report.divider.impianto", name=impianto),
                             self.cards_container,
                         ),
                         0,

@@ -5,14 +5,14 @@ from sqlalchemy import delete
 from backend.database.db_manager import get_session
 from backend.database.init_database import init_database
 from backend.factories import (
-    LineaFactory,
+    ImpiantoFactory,
     QuadroElettricoFactory,
     RepartoFactory,
     SedeFactory,
     bind_factory_session,
     crea_quadro_con_filtro,
 )
-from backend.models import Filtro, Intervento, Linea, QuadroElettrico, Reparto, Sede
+from backend.models import Filtro, Impianto, Intervento, QuadroElettrico, Reparto, Sede
 
 
 def seed_dev_data(*, clear: bool = False) -> None:
@@ -25,7 +25,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
             session.execute(delete(Intervento))
             session.execute(delete(Filtro))
             session.execute(delete(QuadroElettrico))
-            session.execute(delete(Linea))
+            session.execute(delete(Impianto))
             session.execute(delete(Reparto))
             session.execute(delete(Sede))
             session.commit()
@@ -34,13 +34,13 @@ def seed_dev_data(*, clear: bool = False) -> None:
         reparto_prod = RepartoFactory(sede=sede, reparto="Produzione")
         reparto_uffici = RepartoFactory(sede=sede, reparto="Uffici")
 
-        linea_1 = LineaFactory(reparto=reparto_prod, linea="Linea 1")
-        linea_2 = LineaFactory(reparto=reparto_prod, linea="Linea 2")
-        linea_uffici = LineaFactory(reparto=reparto_uffici, linea="Climatizzazione")
+        impianto_1 = ImpiantoFactory(reparto=reparto_prod, impianto="Impianto 1")
+        impianto_2 = ImpiantoFactory(reparto=reparto_prod, impianto="Impianto 2")
+        impianto_uffici = ImpiantoFactory(reparto=reparto_uffici, impianto="Climatizzazione")
 
         # Un quadro per ogni caso di stato (badge ✓ ! ✗)
         crea_quadro_con_filtro(
-            linea=linea_1,
+            impianto=impianto_1,
             quadro_elettrico="QED-OK",
             quantita_filtri=4,
             dimensione_filtri="600x600",
@@ -48,7 +48,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
             stato="ok",
         )
         crea_quadro_con_filtro(
-            linea=linea_1,
+            impianto=impianto_1,
             quadro_elettrico="QED-WARN",
             quantita_filtri=6,
             dimensione_filtri="800x800",
@@ -56,7 +56,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
             stato="warning",
         )
         crea_quadro_con_filtro(
-            linea=linea_1,
+            impianto=impianto_1,
             quadro_elettrico="QED-OVER",
             quantita_filtri=8,
             dimensione_filtri="1000x1000",
@@ -64,7 +64,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
             stato="overdue",
         )
         QuadroElettricoFactory(
-            linea=linea_1,
+            impianto=impianto_1,
             quadro_elettrico="QED-NOINT",
             quantita_filtri=2,
             dimensione_filtri="500x500",
@@ -74,7 +74,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
 
         # Un quadro per ogni tipo di frequenza
         crea_quadro_con_filtro(
-            linea=linea_1,
+            impianto=impianto_1,
             quadro_elettrico="QED-GIORNI",
             quantita_filtri=3,
             dimensione_filtri="600x600",
@@ -82,7 +82,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
             stato="ok",
         )
         crea_quadro_con_filtro(
-            linea=linea_1,
+            impianto=impianto_1,
             quadro_elettrico="QED-SETT",
             quantita_filtri=5,
             dimensione_filtri="600x600",
@@ -90,7 +90,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
             stato="ok",
         )
         crea_quadro_con_filtro(
-            linea=linea_1,
+            impianto=impianto_1,
             quadro_elettrico="QED-TRIM",
             quantita_filtri=7,
             dimensione_filtri="600x600",
@@ -98,7 +98,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
             stato="ok",
         )
         crea_quadro_con_filtro(
-            linea=linea_1,
+            impianto=impianto_1,
             quadro_elettrico="QED-ANN",
             quantita_filtri=12,
             dimensione_filtri="600x600",
@@ -108,7 +108,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
         )
 
         crea_quadro_con_filtro(
-            linea=linea_2,
+            impianto=impianto_2,
             quadro_elettrico="QED-02",
             quantita_filtri=3,
             dimensione_filtri="1000x1000",
@@ -116,7 +116,7 @@ def seed_dev_data(*, clear: bool = False) -> None:
             stato="warning",
         )
         crea_quadro_con_filtro(
-            linea=linea_uffici,
+            impianto=impianto_uffici,
             quadro_elettrico="QED-U1",
             quantita_filtri=4,
             dimensione_filtri="500x500",

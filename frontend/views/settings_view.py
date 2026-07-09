@@ -18,7 +18,11 @@ from qfluentwidgets import (
 )
 
 from backend.i18n import format_date, tr
-from backend.schemas.app_preferences import AppPreferences, ThemePreference
+from backend.schemas.app_preferences import (
+    AppPreferences,
+    LiveRefreshPreference,
+    ThemePreference,
+)
 from backend.services.app_preferences_service import (
     load_app_preferences,
     save_app_preferences,
@@ -94,6 +98,20 @@ class SettingsInterface(QFrame):
             formats_group,
         )
         formats_group.addSettingCard(self.date_format_card)
+        self.live_refresh_card = SelectSettingCard(
+            FIF.SYNC,
+            tr("settings.live_refresh"),
+            tr("settings.live_refresh.help"),
+            [
+                ("15", tr("settings.live_refresh.15s")),
+                ("30", tr("settings.live_refresh.30s")),
+                ("60", tr("settings.live_refresh.60s")),
+                ("300", tr("settings.live_refresh.300s")),
+            ],
+            self._preferences.live_refresh_seconds,
+            formats_group,
+        )
+        formats_group.addSettingCard(self.live_refresh_card)
         layout.addWidget(formats_group)
 
         self.preview_label = BodyLabel("", self)
@@ -105,6 +123,7 @@ class SettingsInterface(QFrame):
         self.theme_card.valueChanged.connect(self._on_theme_changed)
         self.language_card.valueChanged.connect(self._on_language_changed)
         self.date_format_card.valueChanged.connect(self._on_date_format_changed)
+        self.live_refresh_card.valueChanged.connect(self._on_live_refresh_changed)
 
         self._loading = False
         self._update_preview()
@@ -115,6 +134,7 @@ class SettingsInterface(QFrame):
         self.theme_card.set_value(self._preferences.theme)
         self.language_card.set_value(self._preferences.language)
         self.date_format_card.set_value(self._preferences.date_format)
+        self.live_refresh_card.set_value(self._preferences.live_refresh_seconds)
         self._loading = False
         self._update_preview()
 
@@ -153,6 +173,19 @@ class SettingsInterface(QFrame):
 
         apply_app_preferences(self._preferences, app=QApplication.instance())
         self._update_preview()
+        self.preferences_changed.emit()
+
+    def _on_live_refresh_changed(self, value: str) -> None:
+        if self._loading:
+            return
+        refresh_value = cast(
+            LiveRefreshPreference,
+            value if value in {"15", "30", "60", "300"} else "60",
+        )
+        self._preferences = self._preferences.model_copy(
+            update={"live_refresh_seconds": refresh_value}
+        )
+        self._save_preferences()
         self.preferences_changed.emit()
 
     def _update_preview(self) -> None:

@@ -12,15 +12,15 @@ if TYPE_CHECKING:
     from backend.models.reparto import Reparto
 
 
-class Linea(Base):
-    __tablename__ = "linea"
+class Impianto(Base):
+    __tablename__ = "impianto"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    linea: Mapped[str] = mapped_column(String, nullable=False)
+    impianto: Mapped[str] = mapped_column(String, nullable=False)
     reparto_id: Mapped[int] = mapped_column(ForeignKey("reparto.id"), nullable=False)
 
-    reparto: Mapped["Reparto"] = relationship(back_populates="linee")
+    reparto: Mapped["Reparto"] = relationship(back_populates="impianti")
     quadri_elettrici: Mapped[list["QuadroElettrico"]] = relationship(
-        back_populates="linea",
+        back_populates="impianto",
         cascade="all, delete-orphan",
     )

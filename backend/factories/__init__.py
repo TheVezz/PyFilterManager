@@ -1,7 +1,7 @@
 from backend.factories.factories import (
     FiltroFactory,
+    ImpiantoFactory,
     InterventoFactory,
-    LineaFactory,
     QuadroElettricoFactory,
     RepartoFactory,
     SedeFactory,
@@ -19,7 +19,7 @@ from backend.factories.session import bind_factory_session, get_factory_session
 __all__ = [
     "SedeFactory",
     "RepartoFactory",
-    "LineaFactory",
+    "ImpiantoFactory",
     "QuadroElettricoFactory",
     "FiltroFactory",
     "InterventoFactory",

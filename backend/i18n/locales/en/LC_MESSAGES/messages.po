@@ -174,8 +174,8 @@ msgstr "Search by size"
 msgid "filtri.search.frequenza"
 msgstr "Search by frequency"
 
-msgid "filtri.search.linea"
-msgstr "Search by line"
+msgid "filtri.search.impianto"
+msgstr "Search by plant"
 
 msgid "filtri.search.quadro"
 msgstr "Search by panel"
@@ -222,8 +222,8 @@ msgstr "Home"
 msgid "nav.report"
 msgstr "Report"
 
-msgid "report.divider.linea"
-msgstr "Line · {name}"
+msgid "report.divider.impianto"
+msgstr "Plant · {name}"
 
 msgid "report.divider.reparto"
 msgstr "Department · {name}"
@@ -306,8 +306,8 @@ msgstr "Size"
 msgid "search.scope.frequenza"
 msgstr "Frequency"
 
-msgid "search.scope.linea"
-msgstr "Line"
+msgid "search.scope.impianto"
+msgstr "Plant"
 
 msgid "search.scope.multi"
 msgstr "{count} fields"
